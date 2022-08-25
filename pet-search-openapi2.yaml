@@ -1,0 +1,34 @@
+openapi: 3.0.3
+info:
+  title: Pet Search
+  version: 0.0.1
+tags:
+  - name: api
+    description: Search for Pets
+
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        name:
+          type: string
+    PetsList:
+      type: array
+        $ref: '#/components/schemas/Pet'
+paths:
+  /api/petSearch:
+    get:
+      tags:
+        -api
+      summary: Get all pets
+      description: find all pets
+      responses:
+        '200':
+          description: at least one pet exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetsList'
+        '204':
+          description: no pets found

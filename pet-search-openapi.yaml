@@ -1,0 +1,38 @@
+openapi: "3.0.2"
+info:
+  title: API Title
+  version: "1.0"
+servers:
+  - url: https://api.server.test/v1
+tags:
+  - name: api
+    description: Search for Pets
+
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        name:
+          type: string
+    PetsList:
+      $ref: '#/components/schemas/Pet'
+      type: array
+
+paths:
+  /api/petSearch:
+    get:
+      tags:
+        -api
+      summary: Get all pets
+      description: find all pets
+      responses:
+        '200':
+          description: at least one pet exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetsList'
+        '204':
+          description: no pets found
+
