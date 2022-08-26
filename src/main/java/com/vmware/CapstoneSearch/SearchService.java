@@ -14,4 +14,8 @@ public class SearchService {
         return new PetsList(petsRepository.findAll());
     }
 
+    public Pet addPet(Pet pet) {
+        return petsRepository.save(pet);
+    }
+
 }
