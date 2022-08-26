@@ -1,7 +1,14 @@
 package com.vmware.CapstoneSearch;
 
 public class SearchService {
-    public PetsList getPets() {
-        return null;
+    PetsRepository petsRepository;
+
+    public SearchService(PetsRepository petsRepository) {
+        this.petsRepository = petsRepository;
     }
+
+    public PetsList getPets() {
+        return new PetsList(petsRepository.findAll());
+    }
+
 }
