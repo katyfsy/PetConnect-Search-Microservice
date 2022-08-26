@@ -23,7 +23,7 @@ paths:
   /api/petSearch:
     get:
       tags:
-        -api
+        - api
       summary: Get all pets
       description: find all pets
       responses:
