@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchController {
     SearchService searchService;
 
+
     public SearchController(SearchService searchService) {
         this.searchService = searchService;
     }

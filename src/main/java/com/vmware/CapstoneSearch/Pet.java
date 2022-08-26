@@ -1,7 +1,14 @@
 package com.vmware.CapstoneSearch;
 
-public class Pet {
+import javax.persistence.*;
 
+@Entity
+@Table(name="pets")
+
+public class Pet {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String type;
     private String name;
 

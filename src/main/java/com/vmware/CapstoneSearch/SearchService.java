@@ -1,5 +1,8 @@
 package com.vmware.CapstoneSearch;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class SearchService {
     PetsRepository petsRepository;
 
