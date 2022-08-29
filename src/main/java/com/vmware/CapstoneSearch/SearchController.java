@@ -18,7 +18,7 @@ public class SearchController {
         if (zip == null) {
             petsList = searchService.getPets();
         } else {
-            petsList = searchService.getPets();
+            petsList = searchService.getPets(zip);
         }
 
         return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);

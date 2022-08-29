@@ -1,5 +1,6 @@
 package com.vmware.CapstoneSearch;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,15 @@ class SearchServiceTest {
         Pet pet = new Pet("dog", "jim", "12345");
         when(petsRepository.findAll()).thenReturn(Arrays.asList(pet));
         PetsList petsList = searchService.getPets();
+        assertThat(petsList).isNotNull();
+        assertThat(petsList.isEmpty()).isFalse();
+    }
+
+    @Test
+    void getPets_ZipArg_returnsList() {
+        Pet pet = new Pet("dog", "jim", "12345");
+        when(petsRepository.findAll()).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets("90001");
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
