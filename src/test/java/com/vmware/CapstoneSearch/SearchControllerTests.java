@@ -44,6 +44,22 @@ public class SearchControllerTests {
                 .andExpect(jsonPath("$.pets", hasSize(5)));
     }
 
+    @Test
+    void getPets_zipParam_exists_returnsPetsList() throws Exception {
+        //arrange
+        List<Pet> pets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            pets.add(new Pet("dog", "lucky"+i));
+        }
+        //act
+        when(searchService.getPets()).thenReturn(new PetsList(pets));
+        //assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?zip=23415"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pets", hasSize(5)));
+    }
+
 
 
 }

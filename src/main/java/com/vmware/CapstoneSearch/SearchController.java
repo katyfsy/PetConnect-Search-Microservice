@@ -1,10 +1,7 @@
 package com.vmware.CapstoneSearch;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class SearchController {
@@ -16,8 +13,14 @@ public class SearchController {
     }
 
     @GetMapping("/api/petSearch")
-    public ResponseEntity<PetsList> getPets() {
-        PetsList petsList = searchService.getPets();
+    public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip) {
+        PetsList petsList;
+        if (zip == null) {
+            petsList = searchService.getPets();
+        } else {
+            petsList = searchService.getPets();
+        }
+
         return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
     }
 
