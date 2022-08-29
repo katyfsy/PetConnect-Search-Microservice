@@ -32,7 +32,7 @@ public class SearchControllerTests {
         //arrange
         List<Pet> pets = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            pets.add(new Pet("dog", "lucky"+i));
+            pets.add(new Pet("dog", "lucky"+i, "1234"));
         }
 //        PetsList petsList = new PetsList(pets);
         //act
@@ -49,7 +49,7 @@ public class SearchControllerTests {
         //arrange
         List<Pet> pets = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            pets.add(new Pet("dog", "lucky"+i));
+            pets.add(new Pet("dog", "lucky"+i, "1234"));
         }
         //act
         when(searchService.getPets()).thenReturn(new PetsList(pets));
