@@ -63,7 +63,7 @@ class CapstoneSearchApplicationTests {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).isNotNull();
 		assertThat(response.getBody().isEmpty()).isFalse();
-		assertThat(response.getBody().petsSize()).isEqualTo(5);
+		assertThat(response.getBody().petsSize()).isEqualTo(4);
 		for(Pet pet : response.getBody().getPets()) {
 			System.out.println(pet);
 		}
