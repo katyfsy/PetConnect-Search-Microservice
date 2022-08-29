@@ -11,13 +11,17 @@ public class Pet {
     private Long id;
     private String type;
     private String name;
+    private String zip;
 
     public Pet() {
     }
 
-    public Pet(String type, String name) {
+
+
+    public Pet(String type, String name, String zip) {
         this.type = type;
         this.name = name;
+        this.zip = zip;
     }
 
     public String getType() {
@@ -28,6 +32,10 @@ public class Pet {
         return name;
     }
 
+    public String getZip() {
+        return zip;
+    }
+
     public void setType(String type) {
         this.type = type;
     }
@@ -36,11 +44,17 @@ public class Pet {
         this.name = name;
     }
 
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
     @Override
     public String toString() {
         return "Pet{" +
-                "type='" + type + '\'' +
+                "id=" + id +
+                ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
+                ", zip='" + zip + '\'' +
                 '}';
     }
 }

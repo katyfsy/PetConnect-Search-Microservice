@@ -32,13 +32,29 @@ public class SearchControllerTests {
         //arrange
         List<Pet> pets = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            pets.add(new Pet("dog", "lucky"+i));
+            pets.add(new Pet("dog", "lucky"+i, "1234"));
         }
 //        PetsList petsList = new PetsList(pets);
         //act
         when(searchService.getPets()).thenReturn(new PetsList(pets));
         //assert
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pets", hasSize(5)));
+    }
+
+    @Test
+    void getPets_zipParam_exists_returnsPetsList() throws Exception {
+        //arrange
+        List<Pet> pets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            pets.add(new Pet("dog", "lucky"+i, "1234"));
+        }
+        //act
+        when(searchService.getPets()).thenReturn(new PetsList(pets));
+        //assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?zip=23415"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pets", hasSize(5)));
