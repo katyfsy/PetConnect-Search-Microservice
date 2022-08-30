@@ -42,4 +42,15 @@ public class SearchService {
     public PetsList getPetsByType(String type) {
         return new PetsList(petsRepository.findByType(type));
     }
+
+    public PetsList getPets(String zip, String type) {
+        String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
+        RestTemplate restTemplate = new RestTemplate();
+        ZipList response = restTemplate.getForObject(uri, ZipList.class);
+        List<String> zips = new ArrayList<>();
+        for (Zip code : response.getZip_codes()) {
+            zips.add(code.zip_code);
+        }
+        return new PetsList(petsRepository.findByZipInAndTypeContains(zips, type));
+    }
 }

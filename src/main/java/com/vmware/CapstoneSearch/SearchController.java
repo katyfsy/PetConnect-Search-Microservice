@@ -17,7 +17,10 @@ public class SearchController {
     @GetMapping("/api/petSearch")
     public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip, @RequestParam(required = false) String type) {
         PetsList petsList;
-        if (zip == null && type != null) {
+        if (zip != null && type != null) {
+            petsList = searchService.getPets(zip, type);
+        }
+        else if (zip == null && type != null) {
             petsList = searchService.getPetsByType(type);
         }
         else if (type == null && zip != null){

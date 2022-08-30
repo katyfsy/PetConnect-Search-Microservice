@@ -80,4 +80,16 @@ class CapstoneSearchApplicationTests {
 			System.out.println(pet);
 		}
 	}
+
+	@Test
+	void getPetsNearZipAndByType_exists_returnsPetsList() {
+		ResponseEntity<PetsList> response = restTemplate.getForEntity("/api/petSearch?zip=90001&type=dog", PetsList.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()).isNotNull();
+		assertThat(response.getBody().isEmpty()).isFalse();
+		assertThat(response.getBody().petsSize()).isEqualTo(4);
+		for(Pet pet : response.getBody().getPets()) {
+			System.out.println(pet);
+		}
+	}
 }

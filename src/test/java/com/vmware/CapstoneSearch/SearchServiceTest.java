@@ -56,4 +56,13 @@ class SearchServiceTest {
         assertThat(petsList.isEmpty()).isFalse();
     }
 
+    @Test
+    void getPets_ZipArgAndTypeArg_returnsList() {
+        Pet pet = new Pet("dog", "jim", "12345");
+        when(petsRepository.findByZipInAndTypeContains(anyList(), anyString())).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets("12345","dog");
+        assertThat(petsList).isNotNull();
+        assertThat(petsList.isEmpty()).isFalse();
+    }
+
 }
