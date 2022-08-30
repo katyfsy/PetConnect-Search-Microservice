@@ -39,4 +39,7 @@ public class SearchService {
         return petsRepository.save(pet);
     }
 
+    public PetsList getPetsByType(String type) {
+        return new PetsList(petsRepository.findByType(type));
+    }
 }
