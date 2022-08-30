@@ -23,6 +23,8 @@ public class PetsList {
         return pets;
     }
 
+    public int petsSize() {return pets.size(); }
+
     public void setPets(List<Pet> pets) {
         this.pets = pets;
     }

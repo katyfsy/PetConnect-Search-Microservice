@@ -51,10 +51,8 @@ public class SearchControllerTests {
         for (int i = 0; i < 5; i++) {
             pets.add(new Pet("dog", "lucky"+i, "1234"));
         }
-        //act
-        when(searchService.getPets()).thenReturn(new PetsList(pets));
-        //assert
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?zip=23415"))
+        when(searchService.getPets("12345")).thenReturn(new PetsList(pets));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?zip=12345"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pets", hasSize(5)));

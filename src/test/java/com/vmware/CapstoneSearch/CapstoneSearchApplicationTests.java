@@ -31,10 +31,10 @@ class CapstoneSearchApplicationTests {
 	void setUp() {
 		this.pets = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-			this.pets.add(new Pet("dog", "lucky"+i, "1234"));
+			this.pets.add(new Pet("dog", "lucky"+i, "9000" + i));
 		}
 		for (int i = 0; i < 5; i++) {
-			this.pets.add(new Pet("cat", "jingles"+i, "1234"));
+			this.pets.add(new Pet("cat", "jingles"+i, "9500" + i));
 		}
 		petsRepository.saveAll(this.pets);
 	}
@@ -48,11 +48,22 @@ class CapstoneSearchApplicationTests {
 
 	@Test
 	void getPets_exists_returnsPetsList() {
-//		assertThat(true).isTrue();
 		ResponseEntity<PetsList> response = restTemplate.getForEntity("/api/petSearch", PetsList.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).isNotNull();
 		assertThat(response.getBody().isEmpty()).isFalse();
+		for(Pet pet : response.getBody().getPets()) {
+			System.out.println(pet);
+		}
+	}
+
+	@Test
+	void getPetsNearZip_exists_returnsPetsList() {
+		ResponseEntity<PetsList> response = restTemplate.getForEntity("/api/petSearch?zip=90001", PetsList.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()).isNotNull();
+		assertThat(response.getBody().isEmpty()).isFalse();
+		assertThat(response.getBody().petsSize()).isEqualTo(4);
 		for(Pet pet : response.getBody().getPets()) {
 			System.out.println(pet);
 		}
