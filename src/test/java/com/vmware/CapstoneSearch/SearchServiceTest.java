@@ -14,6 +14,7 @@ import java.util.Collections;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,4 +46,14 @@ class SearchServiceTest {
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
+
+    @Test
+    void getPets_TypeArg_returnsList() {
+        Pet pet = new Pet("dog", "jim", "12345");
+        when(petsRepository.findByType(anyString())).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPetsByType("dog");
+        assertThat(petsList).isNotNull();
+        assertThat(petsList.isEmpty()).isFalse();
+    }
+
 }
