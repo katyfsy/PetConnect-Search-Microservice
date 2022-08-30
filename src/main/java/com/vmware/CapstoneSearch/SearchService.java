@@ -25,7 +25,7 @@ public class SearchService {
     }
 
     public PetsList getPets(String zip) {
-        String uri = "https://www.zipcodeapi.com/rest/DemoOnly00aTUIXhRDXff3xCpuu6Aeo72wAooltrm13TW5UrGa6OMgPCT540HMje/radius.json/" + zip + "/10/mile";
+        String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
         RestTemplate restTemplate = new RestTemplate();
         ZipList response = restTemplate.getForObject(uri, ZipList.class);
         List<String> zips = new ArrayList<>();
