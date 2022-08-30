@@ -58,6 +58,19 @@ public class SearchControllerTests {
                 .andExpect(jsonPath("$.pets", hasSize(5)));
     }
 
+    @Test
+    void getPets_typeParam_exists_returnsPetsLists() throws Exception {
+        List<Pet> pets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            pets.add(new Pet("dog", "lucky"+i, "1234"));
+        }
+        when(searchService.getPetsByType("dog")).thenReturn(new PetsList(pets));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?type=dog"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pets", hasSize(5)));
+    }
+
 
 
 }

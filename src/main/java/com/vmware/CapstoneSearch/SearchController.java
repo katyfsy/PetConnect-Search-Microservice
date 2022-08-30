@@ -13,14 +13,16 @@ public class SearchController {
     }
 
     @GetMapping("/api/petSearch")
-    public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip) {
+    public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip, @RequestParam(required = false) String type) {
         PetsList petsList;
-        if (zip == null) {
-            petsList = searchService.getPets();
-        } else {
-            petsList = searchService.getPets(zip);
+        if (zip == null && type != null) {
+            petsList = searchService.getPetsByType(type);
         }
-
+        else if (type == null && zip != null){
+            petsList = searchService.getPets(zip);
+        } else {
+            petsList = searchService.getPets();
+        }
         return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
     }
 

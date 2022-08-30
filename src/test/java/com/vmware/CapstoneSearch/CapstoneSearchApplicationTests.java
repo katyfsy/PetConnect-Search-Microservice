@@ -68,4 +68,16 @@ class CapstoneSearchApplicationTests {
 			System.out.println(pet);
 		}
 	}
+
+	@Test
+	void getPetsByType_exists_returnsPetsList() {
+		ResponseEntity<PetsList> response = restTemplate.getForEntity("/api/petSearch?type=dog", PetsList.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()).isNotNull();
+		assertThat(response.getBody().isEmpty()).isFalse();
+		assertThat(response.getBody().petsSize()).isEqualTo(5);
+		for(Pet pet : response.getBody().getPets()) {
+			System.out.println(pet);
+		}
+	}
 }
