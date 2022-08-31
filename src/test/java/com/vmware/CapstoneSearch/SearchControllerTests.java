@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -66,6 +67,19 @@ public class SearchControllerTests {
         }
         when(searchService.getPetsByType("dog")).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?type=dog"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pets", hasSize(5)));
+    }
+
+    @Test
+    void getPets_zipParamAndTypeParam_exists_returnsPetsLists() throws Exception {
+        List<Pet> pets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            pets.add(new Pet("dog", "lucky"+i, "1234"));
+        }
+        when(searchService.getPets(anyString(), anyString())).thenReturn(new PetsList(pets));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?zip=12345&type=dog"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pets", hasSize(5)));
