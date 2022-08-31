@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petsearch
+  template:
+    metadata:
+      labels:
+        app: petsearch
+    spec:
+      imagePullSecrets: # Be sure the token name matches what you created on K8s
+        - name: petsearch-deploy-token
+      containers:
+        - image: tofustore/petsearch
+          name: petsearch
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: petsearch-db
+                  key: DB_HOST
+                  optional: false
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: petsearch-db
+                  key: DB_NAME
+                  optional: false
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: petsearch-db
+                  key: DB_USER
+                  optional: false
+            - name: DB_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: petsearch-db
+                  key: DB_PWD
+                  optional: false
+
