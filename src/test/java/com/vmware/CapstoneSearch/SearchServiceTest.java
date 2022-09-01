@@ -28,8 +28,8 @@ class SearchServiceTest {
     @Test
     void getPets_noArgs_returnsList() {
         Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
-        when(petsRepository.findAll()).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets();
+        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets(null, null, null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
