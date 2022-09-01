@@ -1,20 +1,16 @@
 package com.vmware.CapstoneSearch;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Example;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,36 +27,63 @@ class SearchServiceTest {
 
     @Test
     void getPets_noArgs_returnsList() {
-        Pet pet = new Pet("dog", "jim", "12345");
-        when(petsRepository.findAll()).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets();
+        Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
+        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets(null, null, null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
 
     @Test
     void getPets_ZipArg_returnsList() {
-        Pet pet = new Pet("dog", "jim", "12345");
-        when(petsRepository.findByZipIn(anyList())).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets("12345");
+        Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
+        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets("12345", null, null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
 
     @Test
     void getPets_TypeArg_returnsList() {
-        Pet pet = new Pet("dog", "jim", "12345");
-        when(petsRepository.findByType(anyString())).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPetsByType("dog");
+        Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
+        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets(null, "dog", null, null, null);
+        assertThat(petsList).isNotNull();
+        assertThat(petsList.isEmpty()).isFalse();
+    }
+
+    @Test
+    void getPets_BreedArg_returnsList() {
+        Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
+        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets(null, null, "husky", null, null);
+        assertThat(petsList).isNotNull();
+        assertThat(petsList.isEmpty()).isFalse();
+    }
+
+    @Test
+    void getPets_AgeArg_returnsList() {
+        Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
+        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets(null, null, null, "young", null);
+        assertThat(petsList).isNotNull();
+        assertThat(petsList.isEmpty()).isFalse();
+    }
+
+    @Test
+    void getPets_GenderArg_returnsList() {
+        Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
+        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets(null, null, null, null, "female");
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
 
     @Test
     void getPets_ZipArgAndTypeArg_returnsList() {
-        Pet pet = new Pet("dog", "jim", "12345");
-        when(petsRepository.findByZipInAndTypeContains(anyList(), anyString())).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets("12345","dog");
+        Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
+        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets("12345", "dog", null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }

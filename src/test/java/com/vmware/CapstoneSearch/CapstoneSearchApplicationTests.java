@@ -31,10 +31,10 @@ class CapstoneSearchApplicationTests {
 	void setUp() {
 		this.pets = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-			this.pets.add(new Pet("dog", "lucky"+i, "9000" + i));
+			this.pets.add(new Pet("lucky", "9000" + i, "dog", "husky", "young", "female"));
 		}
 		for (int i = 0; i < 5; i++) {
-			this.pets.add(new Pet("cat", "jingles"+i, "9500" + i));
+			this.pets.add(new Pet("jingles", "9500" + i, "cat", "shorthair", "adult", "female"));
 		}
 		petsRepository.saveAll(this.pets);
 	}
@@ -76,6 +76,42 @@ class CapstoneSearchApplicationTests {
 		assertThat(response.getBody()).isNotNull();
 		assertThat(response.getBody().isEmpty()).isFalse();
 		assertThat(response.getBody().petsSize()).isEqualTo(5);
+		for(Pet pet : response.getBody().getPets()) {
+			System.out.println(pet);
+		}
+	}
+
+	@Test
+	void getPetsByBreed_exists_returnsPetsList() {
+		ResponseEntity<PetsList> response = restTemplate.getForEntity("/api/petSearch?breed=shorthair", PetsList.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()).isNotNull();
+		assertThat(response.getBody().isEmpty()).isFalse();
+		assertThat(response.getBody().petsSize()).isEqualTo(5);
+		for(Pet pet : response.getBody().getPets()) {
+			System.out.println(pet);
+		}
+	}
+
+	@Test
+	void getPetsByAge_exists_returnsPetsList() {
+		ResponseEntity<PetsList> response = restTemplate.getForEntity("/api/petSearch?age=adult", PetsList.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()).isNotNull();
+		assertThat(response.getBody().isEmpty()).isFalse();
+		assertThat(response.getBody().petsSize()).isEqualTo(5);
+		for(Pet pet : response.getBody().getPets()) {
+			System.out.println(pet);
+		}
+	}
+
+	@Test
+	void getPetsByGender_exists_returnsPetsList() {
+		ResponseEntity<PetsList> response = restTemplate.getForEntity("/api/petSearch?gender=female", PetsList.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody()).isNotNull();
+		assertThat(response.getBody().isEmpty()).isFalse();
+		assertThat(response.getBody().petsSize()).isEqualTo(10);
 		for(Pet pet : response.getBody().getPets()) {
 			System.out.println(pet);
 		}
