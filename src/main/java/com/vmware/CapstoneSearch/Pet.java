@@ -13,7 +13,7 @@ public class Pet {
     private String zip;
     private String type;
     private String breed;
-    private int age;
+    private String age;
     private String gender;
 
     public Pet() {
@@ -24,11 +24,11 @@ public class Pet {
         this.zip = zip;
         this.type = type;
         this.breed = "test";
-        this.age = 0;
+        this.age = "0";
         this.gender = "test";
     }
 
-    public Pet(String name, String zip, String type, String breed, int age, String gender) {
+    public Pet(String name, String zip, String type, String breed, String age, String gender) {
         this.name = name;
         this.zip = zip;
         this.type = type;
@@ -69,11 +69,11 @@ public class Pet {
         this.breed = breed;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

@@ -31,10 +31,10 @@ class CapstoneSearchApplicationTests {
 	void setUp() {
 		this.pets = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-			this.pets.add(new Pet("dog", "lucky"+i, "9000" + i));
+			this.pets.add(new Pet("lucky", "9000" + i, "dog", "husky", "5", "female"));
 		}
 		for (int i = 0; i < 5; i++) {
-			this.pets.add(new Pet("cat", "jingles"+i, "9500" + i));
+			this.pets.add(new Pet("jingles", "9500" + i, "cat", "shorthair", "5", "female"));
 		}
 		petsRepository.saveAll(this.pets);
 	}

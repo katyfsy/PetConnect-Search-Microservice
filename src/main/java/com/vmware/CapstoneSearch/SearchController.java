@@ -15,19 +15,20 @@ public class SearchController {
     }
 
     @GetMapping("/api/petSearch")
-    public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip, @RequestParam(required = false) String type) {
+    public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip, @RequestParam(required = false) String type, @RequestParam(required = false) String breed) {
         PetsList petsList;
-        if (zip != null && type != null) {
-            petsList = searchService.getPets(zip, type);
-        }
-        else if (zip == null && type != null) {
-            petsList = searchService.getPetsByType(type);
-        }
-        else if (type == null && zip != null){
-            petsList = searchService.getPets(zip);
-        } else {
-            petsList = searchService.getPets();
-        }
+//        if (zip != null && type != null && breed != null) {
+//            petsList = searchService.getPets(zip, type);
+//        }
+//        else if (zip == null && type != null) {
+//            petsList = searchService.getPetsByType(type);
+//        }
+//        else if (type == null && zip != null){
+//            petsList = searchService.getPets(zip);
+//        } else {
+//            petsList = searchService.getPets();
+//        }
+        petsList = searchService.getPets(zip, type);
         return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
     }
 
