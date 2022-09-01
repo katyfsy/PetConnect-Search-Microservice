@@ -49,7 +49,7 @@ public class SearchService {
         return new PetsList(petsRepository.findByBreed(breed));
     }
 
-    public PetsList getPets(String zip, String type) {
+    public PetsList getPets(String zip, String type, String breed, String age, String gender) {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
             String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
@@ -64,11 +64,11 @@ public class SearchService {
         ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
         if (zips.size() > 0) {
             for (int i = 0; i < zips.size(); i++) {
-                Example<Pet> exampleQuery = Example.of(new Pet(null, zips.get(i), type, null, null, null), matcher);
+                Example<Pet> exampleQuery = Example.of(new Pet(null, zips.get(i), type, breed, age, gender), matcher);
                 results.addAll(petsRepository.findAll(exampleQuery));
             }
         } else {
-            Example<Pet> exampleQuery = Example.of(new Pet(null, zip, type, null, null, null), matcher);
+            Example<Pet> exampleQuery = Example.of(new Pet(null, zip, type, breed, age, gender), matcher);
             results.addAll(petsRepository.findAll(exampleQuery));
         }
 

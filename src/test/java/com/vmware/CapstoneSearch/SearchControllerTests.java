@@ -33,10 +33,10 @@ public class SearchControllerTests {
         //arrange
         List<Pet> pets = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            pets.add(new Pet("dog", "lucky"+i, "1234", "husky", "5", "female"));
+            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
         //act
-        when(searchService.getPets(null, null)).thenReturn(new PetsList(pets));
+        when(searchService.getPets(null, null, null, null, null)).thenReturn(new PetsList(pets));
         //assert
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch"))
                 .andDo(print())
@@ -49,9 +49,9 @@ public class SearchControllerTests {
         //arrange
         List<Pet> pets = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            pets.add(new Pet("dog", "lucky"+i, "1234", "husky", "5", "female"));
+            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets("12345", null)).thenReturn(new PetsList(pets));
+        when(searchService.getPets("12345", null, null, null, null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?zip=12345"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -62,36 +62,64 @@ public class SearchControllerTests {
     void getPets_typeParam_exists_returnsPetsLists() throws Exception {
         List<Pet> pets = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            pets.add(new Pet("dog", "lucky"+i, "1234", "husky", "5", "female"));
+            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets(null, "dog")).thenReturn(new PetsList(pets));
+        when(searchService.getPets(null, "dog", null, null, null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?type=dog"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pets", hasSize(5)));
     }
 
-//    @Test
-//    void getPets_breedParam_exists_returnsPetsList() throws Exception {
-//        //arrange
-//        List<Pet> pets = new ArrayList<>();
-//        for (int i = 0; i < 5; i++) {
-//            pets.add(new Pet("dog", "lucky"+i, "1234", "husky", "5", "female"));
-//        }
-//        when(searchService.getPets(anyString(), anyString())).thenReturn(new PetsList(pets));
-//        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?breed=husky"))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.pets", hasSize(5)));
-//    }
+    @Test
+    void getPets_breedParam_exists_returnsPetsList() throws Exception {
+        //arrange
+        List<Pet> pets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
+        }
+        when(searchService.getPets(null, null, "husky", null, null)).thenReturn(new PetsList(pets));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?breed=husky"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pets", hasSize(5)));
+    }
+
+    @Test
+    void getPets_ageParam_exists_returnsPetsList() throws Exception {
+        //arrange
+        List<Pet> pets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
+        }
+        when(searchService.getPets(null, null, null, "young", null)).thenReturn(new PetsList(pets));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?age=young"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pets", hasSize(5)));
+    }
+
+    @Test
+    void getPets_genderParam_exists_returnsPetsList() throws Exception {
+        //arrange
+        List<Pet> pets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
+        }
+        when(searchService.getPets(null, null, null, null, "female")).thenReturn(new PetsList(pets));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?gender=female"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pets", hasSize(5)));
+    }
 
     @Test
     void getPets_zipParamAndTypeParam_exists_returnsPetsLists() throws Exception {
         List<Pet> pets = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            pets.add(new Pet("dog", "lucky"+i, "1234"));
+            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets(anyString(), anyString())).thenReturn(new PetsList(pets));
+        when(searchService.getPets("12345", "dog", null, null, null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?zip=12345&type=dog"))
                 .andDo(print())
                 .andExpect(status().isOk())
