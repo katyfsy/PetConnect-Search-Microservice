@@ -19,15 +19,6 @@ public class Pet {
     public Pet() {
     }
 
-    public Pet(String type, String name, String zip) {
-        this.name = name;
-        this.zip = zip;
-        this.type = type;
-        this.breed = "test";
-        this.age = "0";
-        this.gender = "test";
-    }
-
     public Pet(String name, String zip, String type, String breed, String age, String gender) {
         this.name = name;
         this.zip = zip;
