@@ -15,7 +15,7 @@ spec:
       imagePullSecrets: # Be sure the token name matches what you created on K8s
         - name: petsearch-deploy-token
       containers:
-        - image: tofustore/petsearch
+        - image: $IMAGE
           name: petsearch
           imagePullPolicy: Always
           ports:

@@ -81,5 +81,5 @@ aws-deploy:
     - aws sts get-caller-identity
     - aws eks update-kubeconfig --name "$CLUSTER_NAME"
   script:
-    - envsubst < tl-deployment.yaml  | kubectl apply -f -
-    - kubectl apply -f tl-service.yaml
+    - envsubst < k8s-scripts/petsSearch-deploy.yaml  | kubectl apply -f -
+    - kubectl apply -f k8s-scripts/petsSearch-service.yaml
