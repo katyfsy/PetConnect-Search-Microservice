@@ -3,18 +3,83 @@ image: openjdk:11
 stages:
   - build
   - test
+  - docker
+  - deploy
 
-build:
+build-my-project:
+  image: openjdk:11
   stage: build
   script:
-    - ./gradlew assemble
+    - ./gradlew bootJar
+  cache:
+    key: GRADLE-BUILD-FILES
+    paths:
+      - build/
   artifacts:
     paths:
+      - build/classes/java/
       - build/libs/*.jar
+    expire_in: 30 days
+
 test:
+  image: openjdk:11
+  needs:
+    - build-my-project
   stage: test
   script:
     ./gradlew test
   artifacts:
     paths:
-      - build/test-results/test/TEST*.xml
+      - build/classes/java/
+      - build/test-results/test/*.xml
+
+production:
+  stage: deploy
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    #                        App name from prev step  Key from your heroku account
+    - dpl --provider=heroku --app=simple-autos-data --api-key=$HEROKU_API_KEY
+  only: # Heroku will ONLY deploy from main or master branch!
+    - master
+
+docker:
+  image: docker:20
+  needs:
+    - build-my-project
+    - test
+  stage: docker
+  services:
+    - docker:dind
+  before_script:
+    - echo "$MY_NAME"
+    - echo $CI_BUILD_TOKEN | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE":"$CI_PIPELINE_IID" .
+    - docker push "$CI_REGISTRY_IMAGE":"$CI_PIPELINE_IID"
+    - docker tag "$CI_REGISTRY_IMAGE":"$CI_PIPELINE_IID" "$CI_REGISTRY_IMAGE":"latest"
+    - docker push "$CI_REGISTRY_IMAGE":"latest"
+
+#deploy
+aws-deploy:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+  image: registry.gitlab.com/galv-vmw-july-2022/capstone/base-aws-eks-image:latest
+  needs:
+    - docker
+  before_script:
+    - echo "$CI_REGISTRY_IMAGE":"$CI_PIPELINE_IID"
+    - export IMAGE="$CI_REGISTRY_IMAGE":"$CI_PIPELINE_IID"
+    - aws configure set aws_access_key_id "$MY_ACCESS_KEY_ID"
+    - aws configure set aws_secret_access_key "$MY_SECRET_ACCESS_KEY"
+    - aws configure set region us-west-2
+    - aws configure set output json
+    - aws sts get-caller-identity
+    - aws eks update-kubeconfig --name "$CLUSTER_NAME"
+  script:
+    - envsubst < tl-deployment.yaml  | kubectl apply -f -
+    - kubectl apply -f tl-service.yaml
