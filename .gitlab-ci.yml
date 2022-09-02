@@ -33,17 +33,17 @@ test:
       - build/classes/java/
       - build/test-results/test/*.xml
 
-production:
-  stage: deploy
-  image: ruby:latest
-  script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
-    - gem install dpl
-    #                        App name from prev step  Key from your heroku account
-    - dpl --provider=heroku --app=simple-autos-data --api-key=$HEROKU_API_KEY
-  only: # Heroku will ONLY deploy from main or master branch!
-    - master
+# production:
+#   stage: deploy
+#   image: ruby:latest
+#   script:
+#     - apt-get update -qy
+#     - apt-get install -y ruby-dev
+#     - gem install dpl
+#     #                        App name from prev step  Key from your heroku account
+#     - dpl --provider=heroku --app=simple-autos-data --api-key=$HEROKU_API_KEY
+#   only: # Heroku will ONLY deploy from main or master branch!
+#     - master
 
 docker:
   image: docker:20
