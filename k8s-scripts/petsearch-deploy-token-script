@@ -1,0 +1,1 @@
+kubectl create secret docker-registry petsearch-deploy-token --docker-username=gitlab+deploy-token-1315340 --docker-password=7WpzwYurVBACKVJ94DoJ --docker-email=humormy@gmail.com --docker-server=registry.gitlab.com
