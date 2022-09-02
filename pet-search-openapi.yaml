@@ -15,6 +15,16 @@ components:
       properties:
         name:
           type: string
+        zip:
+          type: string
+        type:
+          type: string
+        breed:
+          type: string
+        age:
+          type: string
+        gender:
+          type: string
     PetsList:
       $ref: '#/components/schemas/Pet'
       type: array
@@ -26,6 +36,32 @@ paths:
         - api
       summary: Get all pets
       description: find all pets
+      parameters:
+        - name: zip
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: breed
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: age
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: gender
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: at least one pet exists
