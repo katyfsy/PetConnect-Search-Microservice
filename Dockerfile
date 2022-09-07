@@ -1,5 +1,4 @@
 FROM adoptopenjdk:11
 WORKDIR /app
-COPY build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
-EXPOSE 8080
+COPY build/libs/spring-elastic-genie-0.0.1.jar ./spring-elastic-genie-0.0.1.jar
+COPY entrypoint.sh ./entrypoint.sh

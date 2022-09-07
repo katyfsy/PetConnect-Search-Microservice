@@ -38,3 +38,10 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar {
+	mainClass = 'com.vmware.CapstoneSearch.CapstoneSearchApplication'
+	archiveBaseName = 'spring-elastic-genie'
+	archiveVersion = '0.0.1'
+	archiveExtension = 'jar'
+}
