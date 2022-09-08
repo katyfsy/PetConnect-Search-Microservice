@@ -3,23 +3,27 @@ package com.vmware.CapstoneSearch;
 public class Source {
     private String zip;
     private String gender;
+    private String version;
+    private String timestamp;
     private String type;
     private String age;
     private int id;
     private String breed;
     private String name;
 
-    public Source(String zip, String gender, String type, String age, int id, String breed, String name) {
+    public Source() {
+    }
+
+    public Source(String zip, String gender, String version, String timestamp, String type, String age, int id, String breed, String name) {
         this.zip = zip;
         this.gender = gender;
+        this.version = version;
+        this.timestamp = timestamp;
         this.type = type;
         this.age = age;
         this.id = id;
         this.breed = breed;
         this.name = name;
-    }
-
-    public Source() {
     }
 
     public String getZip() {
@@ -36,6 +40,22 @@ public class Source {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getType() {
@@ -83,6 +103,8 @@ public class Source {
         return "Source{" +
                 "zip='" + zip + '\'' +
                 ", gender='" + gender + '\'' +
+                ", version='" + version + '\'' +
+                ", timestamp='" + timestamp + '\'' +
                 ", type='" + type + '\'' +
                 ", age='" + age + '\'' +
                 ", id=" + id +
