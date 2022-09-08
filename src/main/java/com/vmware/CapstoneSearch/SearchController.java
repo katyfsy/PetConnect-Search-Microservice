@@ -15,9 +15,9 @@ public class SearchController {
     }
 
     @GetMapping("/api/petSearch")
-    public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip, @RequestParam(required = false) String type, @RequestParam(required = false) String breed, @RequestParam(required = false) String age, @RequestParam(required = false) String gender) {
+    public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip, @RequestParam(required = false) String type, @RequestParam(required = false) String breed, @RequestParam(required = false) String age, @RequestParam(required = false) String gender, @RequestParam(required = false) String search) {
         PetsList petsList;
-        petsList = searchService.getPets(zip, type, breed, age, gender);
+        petsList = searchService.getPets(zip, type, breed, age, gender, search);
         return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
     }
 
