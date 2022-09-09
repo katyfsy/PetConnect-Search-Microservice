@@ -1,6 +1,10 @@
 package com.vmware.CapstoneSearch;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.vmware.CapstoneSearch.Models.Hit;
+import com.vmware.CapstoneSearch.Models.Source;
+import com.vmware.CapstoneSearch.Models.Zip;
+import com.vmware.CapstoneSearch.Models.ZipList;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.*;

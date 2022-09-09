@@ -1,15 +1,15 @@
-package com.vmware.CapstoneSearch;
+package com.vmware.CapstoneSearch.Models;
 
 import java.util.List;
 
-public class Match {
+public class MultiMatch {
     private String query;
     private List<String> fields;
 
-    public Match() {
+    public MultiMatch() {
     }
 
-    public Match(String query, List<String> fields) {
+    public MultiMatch(String query, List<String> fields) {
         this.query = query;
         this.fields = fields;
     }
@@ -32,7 +32,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match{" +
+        return "MultiMatch{" +
                 "query='" + query + '\'' +
                 ", fields=" + fields +
                 '}';

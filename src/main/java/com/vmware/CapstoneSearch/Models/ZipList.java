@@ -1,6 +1,5 @@
-package com.vmware.CapstoneSearch;
+package com.vmware.CapstoneSearch.Models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ZipList {

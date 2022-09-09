@@ -1,5 +1,8 @@
 package com.vmware.CapstoneSearch;
 
+import com.vmware.CapstoneSearch.Models.HitStatus;
+import com.vmware.CapstoneSearch.Models.Shards;
+
 public class SearchResults {
     private String took;
     private boolean timed_out;

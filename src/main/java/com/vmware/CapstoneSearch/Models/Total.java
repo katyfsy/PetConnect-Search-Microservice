@@ -1,4 +1,4 @@
-package com.vmware.CapstoneSearch;
+package com.vmware.CapstoneSearch.Models;
 
 public class Total {
     private int value;
