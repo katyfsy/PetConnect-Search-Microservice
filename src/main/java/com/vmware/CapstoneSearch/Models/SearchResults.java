@@ -1,4 +1,4 @@
-package com.vmware.CapstoneSearch;
+package com.vmware.CapstoneSearch.Models;
 
 import com.vmware.CapstoneSearch.Models.HitStatus;
 import com.vmware.CapstoneSearch.Models.Shards;
