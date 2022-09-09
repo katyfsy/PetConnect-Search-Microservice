@@ -41,7 +41,7 @@ tasks.named('test') {
 
 bootJar {
 	mainClass = 'com.vmware.CapstoneSearch.CapstoneSearchApplication'
-	archiveBaseName = 'spring-elastic-genie'
+	archiveBaseName = 'petconnect-search'
 	archiveVersion = '0.0.1'
 	archiveExtension = 'jar'
 }
