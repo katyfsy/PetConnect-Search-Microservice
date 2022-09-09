@@ -40,6 +40,8 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    expose:
+      - "9200"
     environment:
       - bootstrap.memory_lock=true
       - cluster.name=springelasticgenie
