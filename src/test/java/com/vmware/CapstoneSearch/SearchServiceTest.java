@@ -98,4 +98,14 @@ class SearchServiceTest {
 //        assertThat(petsList.isEmpty()).isFalse();
 //    }
 
+    @Test
+    void addPet_valid_returnsPet(){
+        Pet pet = new Pet("Charles", "91111", "iguana", "fire dragon", "young", "male");
+        when(petsRepository.save(any(Pet.class)))
+                .thenReturn(pet);
+        Pet newPet = searchService.addPet(pet);
+        assertThat(newPet).isNotNull();
+        assertThat(newPet.getType()).isEqualTo("iguana");
+    }
+
 }
