@@ -157,7 +157,7 @@ public class SearchControllerTests {
 
   // searching one char at a time - generates autocomplete options
   @Test
-  void getPets_oneChar_exists_returnsPetsListThatApproximateSearchQuery() throws Exception {
+  void getSuggestions_oneChar_exists_returnsPetsListThatApproximateSearchQuery() throws Exception {
       //arrange
       List<Pet> pets = new ArrayList<>();
       for (int i = 0; i < 5; i++) {

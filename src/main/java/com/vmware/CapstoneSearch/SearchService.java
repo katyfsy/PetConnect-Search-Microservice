@@ -91,17 +91,30 @@ public class SearchService {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"wildcard\":{\"name\":{\"value\":" + search + "}}}}", headers);
-
+//        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"multi_match\":{\"query\":\"" + search + "\",\"fields\":[\"breed\",\"type\",\"name\"]}}}", headers);
+        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"wildcard\":{\"name\":{\"value\":\"" + search + "*\"}}}}", headers);
         ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
-        List<Hit> hits = response.getBody().getHits().getHits();
-        System.out.println(hits);
-        List<Pet> convertedHitstoPets = new ArrayList<>();
-        for (int i = 0; i < hits.size(); i++) {
-            Source pet = hits.get(i).get_source();
-            convertedHitstoPets.add(new Pet(pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getGender()));
-            }
-        return new PetsList(convertedHitstoPets);
+        System.out.println(response);
+
+//        List<Hit> hits = response.getBody().getHits().getHits();
+//
+//        List<Pet> convertedHitstoPets = new ArrayList<>();
+//        for (int i = 0; i < hits.size(); i++) {
+//            Source pet = hits.get(i).get_source();
+//            convertedHitstoPets.add(new Pet(pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getGender()));
+//            }
+//        System.out.println(convertedHitstoPets);
+//        return new PetsList(convertedHitstoPets);
+
+
+        List<Pet> pets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
+        }
+        return new PetsList(pets);
+
+
+
     }
 
 }
