@@ -28,17 +28,25 @@ public class SearchService {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
             String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
+//            String uri = "https://www.zipcodeapi.com/rest/DemoOnly003gbBlwNX0SPKxGfooM3zaKTsPwHnJPkbHT0DLHL1GReEwIutZKseyU/radius.json/" + zip + "/10/mile";
             RestTemplate restTemplate = new RestTemplate();
             ZipList response = restTemplate.getForObject(uri, ZipList.class);
             for (Zip code : response.getZip_codes()) {
                 zips.add(code.zip_code);
             }
         }
+
         if (search != null) {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"multi_match\":{\"query\":\"" + search + "\",\"type\":\"cross_fields\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"operator\":\"and\"}}}", headers);
+            String query;
+            if (search.equals("*")) {
+                query = "{\"query\":{\"match_all\":{}}}";
+            } else {
+                query = "{\"query\":{\"multi_match\":{\"query\":\"" + search + "\",\"type\":\"cross_fields\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"operator\":\"and\"}}}";
+            }
+            HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
 
             ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
             List<Hit> hits = response.getBody().getHits().getHits();
@@ -47,9 +55,9 @@ public class SearchService {
             for (int i = 0; i < hits.size(); i++) {
                 Source pet = hits.get(i).get_source();
                 if (zip != null && zips.contains(pet.getZip())) {
-                    convertedHitstoPets.add(new Pet(pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getGender()));
+                    convertedHitstoPets.add(new Pet(pet.getOwner(), pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getWeight(), pet.getGender(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>()));
                 } else if (zip == null) {
-                    convertedHitstoPets.add(new Pet(pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getGender()));
+                    convertedHitstoPets.add(new Pet(pet.getOwner(), pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getWeight(), pet.getGender(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>()));
                 }
             }
             List<Pet> filteredPets = convertedHitstoPets;
@@ -79,7 +87,6 @@ public class SearchService {
                 Example<Pet> exampleQuery = Example.of(new Pet(null, zip, type, breed, age, gender), matcher);
                 results.addAll(petsRepository.findAll(exampleQuery));
             }
-
 
             return new PetsList(results);
         }
