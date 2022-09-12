@@ -24,6 +24,7 @@ public class SearchService {
         return petsRepository.save(pet);
     }
 
+    // get pets based on exact matches
     public PetsList getPets(String zip, String type, String breed, String age, String gender, String search) throws JsonProcessingException {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
@@ -84,4 +85,23 @@ public class SearchService {
             return new PetsList(results);
         }
     }
+
+
+    public PetsList getSuggestions(String search) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"wildcard\":{\"name\":{\"value\":" + search + "}}}}", headers);
+
+        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
+        List<Hit> hits = response.getBody().getHits().getHits();
+        System.out.println(hits);
+        List<Pet> convertedHitstoPets = new ArrayList<>();
+        for (int i = 0; i < hits.size(); i++) {
+            Source pet = hits.get(i).get_source();
+            convertedHitstoPets.add(new Pet(pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getGender()));
+            }
+        return new PetsList(convertedHitstoPets);
+    }
+
 }

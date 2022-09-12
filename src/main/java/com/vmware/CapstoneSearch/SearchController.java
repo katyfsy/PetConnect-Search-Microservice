@@ -26,4 +26,13 @@ public class SearchController {
     public Pet addPet(@RequestBody Pet pet) { return searchService.addPet(pet); }
 
 
+
+    // approximate search - returns autocomplete options
+    @GetMapping("/api/suggestions")
+    public ResponseEntity<PetsList> getSuggestions(@RequestParam(required = false) String search) {
+        System.out.println("got request");
+        PetsList petsList = searchService.getSuggestions(search);
+        return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
+    }
+
 }

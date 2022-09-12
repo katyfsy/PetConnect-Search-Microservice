@@ -155,5 +155,22 @@ public class SearchControllerTests {
                 .andExpect(jsonPath("type").value("iguana"));
     }
 
+  // searching one char at a time - generates autocomplete options
+  @Test
+  void getPets_oneChar_exists_returnsPetsListThatApproximateSearchQuery() throws Exception {
+      //arrange
+      List<Pet> pets = new ArrayList<>();
+      for (int i = 0; i < 5; i++) {
+          pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
+      }
+      //act
+      when(searchService.getSuggestions("l")).thenReturn(new PetsList(pets));
+      //assert
+      mockMvc.perform(MockMvcRequestBuilders.get("/api/suggestions?search=l"))
+              .andDo(print())
+              .andExpect(status().isOk())
+              .andExpect(jsonPath("$.pets", hasSize(5)));
+  }
+
 
 }
