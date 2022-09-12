@@ -27,8 +27,8 @@ public class SearchService {
     public PetsList getPets(String zip, String type, String breed, String age, String gender, String search) throws JsonProcessingException {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
-            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
-//            String uri = "https://www.zipcodeapi.com/rest/DemoOnly003gbBlwNX0SPKxGfooM3zaKTsPwHnJPkbHT0DLHL1GReEwIutZKseyU/radius.json/" + zip + "/10/mile";
+//            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
+            String uri = "https://www.zipcodeapi.com/rest/DemoOnly003gbBlwNX0SPKxGfooM3zaKTsPwHnJPkbHT0DLHL1GReEwIutZKseyU/radius.json/" + zip + "/10/mile";
             RestTemplate restTemplate = new RestTemplate();
             ZipList response = restTemplate.getForObject(uri, ZipList.class);
             for (Zip code : response.getZip_codes()) {
