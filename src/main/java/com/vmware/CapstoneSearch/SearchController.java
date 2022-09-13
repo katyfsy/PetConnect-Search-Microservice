@@ -16,14 +16,23 @@ public class SearchController {
     }
 
     @GetMapping("/api/petSearch")
-    public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip, @RequestParam(required = false) String type, @RequestParam(required = false) String breed, @RequestParam(required = false) String age, @RequestParam(required = false) String gender, @RequestParam(required = false) String search) throws JsonProcessingException {
+    public ResponseEntity<PetsList> getPets(@RequestParam(required = false) String zip,  @RequestParam(required = false, defaultValue="10") String radius, @RequestParam(required = false) String type, @RequestParam(required = false) String breed, @RequestParam(required = false) String age, @RequestParam(required = false) String gender, @RequestParam(required = false) String search) throws JsonProcessingException {
         PetsList petsList;
-        petsList = searchService.getPets(zip, type, breed, age, gender, search);
+        petsList = searchService.getPets(zip, radius, type, breed, age, gender, search);
         return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
     }
 
     @PostMapping("/api/petSearch")
     public Pet addPet(@RequestBody Pet pet) { return searchService.addPet(pet); }
 
+
+
+    // approximate search - returns autocomplete options
+    @GetMapping("/api/suggestions")
+    public ResponseEntity<PetsList> getSuggestions(@RequestParam(required = false) String search) {
+//        System.out.println("got request");
+        PetsList petsList = searchService.getSuggestions(search);
+        return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
+    }
 
 }

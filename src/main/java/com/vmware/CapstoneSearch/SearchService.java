@@ -24,21 +24,18 @@ public class SearchService {
         return petsRepository.save(pet);
     }
 
-    public PetsList getPets(String zip, String type, String breed, String age, String gender, String search) throws JsonProcessingException {
+    // get pets based on exact matches
+    public PetsList getPets(String zip, String radius, String type, String breed, String age, String gender, String search) throws JsonProcessingException {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
 //            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
-            String uri = "https://www.zipcodeapi.com/rest/DemoOnly003gbBlwNX0SPKxGfooM3zaKTsPwHnJPkbHT0DLHL1GReEwIutZKseyU/radius.json/" + zip + "/10/mile";
+
+            String uri = "https://www.zipcodeapi.com/rest/DemoOnly006uPUlZv4X5Mfy9aBBG0spllwbnC3rHskAIbOivceG2IW0M5Z6fLbg8/radius.json/" + zip + "/" + radius + "/mile";
             RestTemplate restTemplate = new RestTemplate();
             ZipList response = restTemplate.getForObject(uri, ZipList.class);
             for (Zip code : response.getZip_codes()) {
                 zips.add(code.zip_code);
             }
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.setContentType(MediaType.APPLICATION_JSON);
-//            for (int i = 0; i < zips.size(); i++) {
-//            HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"match\":{\"" + zips.getZip_codes(i) + "\":{\"query\":\"90211\"}}}}", headers);
-//            }
         }
         if (search != null) {
             RestTemplate restTemplate = new RestTemplate();
@@ -48,7 +45,7 @@ public class SearchService {
 
             ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
             List<Hit> hits = response.getBody().getHits().getHits();
-            System.out.println(hits);
+//            System.out.println(hits);
             List<Pet> convertedHitstoPets = new ArrayList<>();
             for (int i = 0; i < hits.size(); i++) {
                 Source pet = hits.get(i).get_source();
@@ -90,4 +87,23 @@ public class SearchService {
             return new PetsList(results);
         }
     }
+
+
+    public PetsList getSuggestions(String search) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"wildcard\":{\"name\":{\"value\":\"" + search + "*\"}}}}", headers);
+        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
+
+        List<Hit> hits = response.getBody().getHits().getHits();
+
+        List<Pet> convertedHitstoPets = new ArrayList<>();
+        for (int i = 0; i < hits.size(); i++) {
+            Source pet = hits.get(i).get_source();
+            convertedHitstoPets.add(new Pet(pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getGender()));
+            }
+        return new PetsList(convertedHitstoPets);
+    }
+
 }
