@@ -19,10 +19,10 @@ public class SearchService {
         return petsRepository.save(pet);
     }
 
-    public PetsList getPets(String zip, String radius, String type, String breed, String age, String gender) {
+    public PetsList getPets(String zip, String type, String breed, String age, String gender) {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
-            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/" + radius + "/mile";
+            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
             RestTemplate restTemplate = new RestTemplate();
             ZipList response = restTemplate.getForObject(uri, ZipList.class);
             for (Zip code : response.getZip_codes()) {
