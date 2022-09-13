@@ -112,13 +112,13 @@ class SearchServiceTest {
         assertThat(newPet.getType()).isEqualTo("iguana");
     }
 
-//    @Test
-//    void getSuggestions_SearchArg_returnsList() {
-//        Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
-//        when(petsRepository.findAll()).thenReturn(List.of(pet));
-//        PetsList petsList = searchService.getSuggestions("b");
-//        assertThat(petsList).isNotNull();
-//        assertThat(petsList.isEmpty()).isFalse();
-//    }
+    @Test
+    void getSuggestions_SearchArg_returnsList() {
+        Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
+        when(petsRepository.findAll()).thenReturn(List.of(pet));
+        PetsList petsList = searchService.getSuggestions("b");
+        assertThat(petsList).isNotNull();
+        assertThat(petsList.isEmpty()).isFalse();
+    }
 
 }

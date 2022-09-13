@@ -92,11 +92,11 @@ public class SearchService {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"wildcard\":{\"name\":{\"value\":\"" + search + "*\"}}}}", headers);
+        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"query_string\":{\"query\":\"" + search + "*\",\"fields\":[\"name\",\"breed\"]}}}", headers);
         ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
 
         List<Hit> hits = response.getBody().getHits().getHits();
-
+        System.out.println("hits ===> " + hits);
         List<Pet> convertedHitstoPets = new ArrayList<>();
         for (int i = 0; i < hits.size(); i++) {
             Source pet = hits.get(i).get_source();
