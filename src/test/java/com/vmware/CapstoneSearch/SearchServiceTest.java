@@ -29,7 +29,7 @@ class SearchServiceTest {
     void getPets_noArgs_returnsList() {
         Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, null, null, null, null);
+        PetsList petsList = searchService.getPets(null, "10", null, null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -38,7 +38,7 @@ class SearchServiceTest {
     void getPets_ZipArg_returnsList() {
         Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets("12345", null, null, null, null);
+        PetsList petsList = searchService.getPets("12345", "10", null, null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -47,7 +47,7 @@ class SearchServiceTest {
     void getPets_TypeArg_returnsList() {
         Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, "dog", null, null, null);
+        PetsList petsList = searchService.getPets(null, "10", "dog", null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -56,7 +56,7 @@ class SearchServiceTest {
     void getPets_BreedArg_returnsList() {
         Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, null, "husky", null, null);
+        PetsList petsList = searchService.getPets(null, "10", null, "husky", null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -65,7 +65,7 @@ class SearchServiceTest {
     void getPets_AgeArg_returnsList() {
         Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, null, null, "young", null);
+        PetsList petsList = searchService.getPets(null, "10", null, null, "young", null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -74,7 +74,7 @@ class SearchServiceTest {
     void getPets_GenderArg_returnsList() {
         Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, null, null, null, "female");
+        PetsList petsList = searchService.getPets(null, "10", null, null, null, "female");
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -83,7 +83,7 @@ class SearchServiceTest {
     void getPets_ZipArgAndTypeArg_returnsList() {
         Pet pet = new Pet("dog", "lucky", "1234", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets("12345", "dog", null, null, null);
+        PetsList petsList = searchService.getPets("12345", "10", "dog", null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
