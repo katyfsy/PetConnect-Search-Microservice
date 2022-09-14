@@ -55,9 +55,9 @@ public class SearchService {
             for (int i = 0; i < hits.size(); i++) {
                 Source pet = hits.get(i).get_source();
                 if (zip != null && zips.contains(pet.getZip())) {
-                    convertedHitstoPets.add(new Pet(pet.getOwner(), pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getWeight(), pet.getGender(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>()));
+                    convertedHitstoPets.add(new Pet(pet.getOwner(), pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getWeight(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score()));
                 } else if (zip == null) {
-                    convertedHitstoPets.add(new Pet(pet.getOwner(), pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getWeight(), pet.getGender(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>()));
+                    convertedHitstoPets.add(new Pet(pet.getOwner(), pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getWeight(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score()));
                 }
             }
             List<Pet> filteredPets = convertedHitstoPets;
@@ -71,7 +71,7 @@ public class SearchService {
                 filteredPets = filteredPets.stream().filter(pet -> pet.getAge().equals(age)).collect(Collectors.toList());
             }
             if (gender != null) {
-                filteredPets = filteredPets.stream().filter(pet -> pet.getGender().equals(gender)).collect(Collectors.toList());
+                filteredPets = filteredPets.stream().filter(pet -> pet.getSex().equals(gender)).collect(Collectors.toList());
             }
             return new PetsList(filteredPets);
 
@@ -105,7 +105,7 @@ public class SearchService {
         List<Pet> convertedHitstoPets = new ArrayList<>();
         for (int i = 0; i < hits.size(); i++) {
             Source pet = hits.get(i).get_source();
-            convertedHitstoPets.add(new Pet(pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getGender()));
+            convertedHitstoPets.add(new Pet(pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getSex()));
             }
         return new PetsList(convertedHitstoPets);
     }

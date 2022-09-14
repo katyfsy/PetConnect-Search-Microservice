@@ -4,7 +4,8 @@ public class Source {
 
     private boolean adopted;
     private String zip;
-    private String gender;
+    private String sex;
+
     private String version;
     private String timestamp;
     private String type;
@@ -25,10 +26,12 @@ public class Source {
     }
 
 
-    public Source(boolean adopted, String zip, String gender, String version, String timestamp, String type, String age, int id, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description) {
+    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, int id, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description) {
+
         this.adopted = adopted;
         this.zip = zip;
-        this.gender = gender;
+        this.sex = sex;
+
         this.version = version;
         this.timestamp = timestamp;
         this.type = type;
@@ -53,12 +56,15 @@ public class Source {
         this.zip = zip;
     }
 
-    public String getGender() {
-        return gender;
+    public String getSex() {
+
+        return sex;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setSex(String sex) {
+
+        this.sex = sex;
+
     }
 
     public String getVersion() {
@@ -186,7 +192,7 @@ public class Source {
         return "Source{" +
                 "adopted=" + adopted +
                 ", zip='" + zip + '\'' +
-                ", gender='" + gender + '\'' +
+                ", sex='" + sex + '\'' +
                 ", version='" + version + '\'' +
                 ", timestamp='" + timestamp + '\'' +
                 ", type='" + type + '\'' +
@@ -203,4 +209,5 @@ public class Source {
                 ", description='" + description + '\'' +
                 '}';
     }
+
 }

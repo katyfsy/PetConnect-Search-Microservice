@@ -21,7 +21,7 @@ public class Pet {
     private String breed;
     private String age;
     private double weight;
-    private String gender;
+    private String sex;
 
     private boolean reproductiveStatus;
     private String description;
@@ -31,21 +31,22 @@ public class Pet {
     private boolean adopted;
     @OneToMany(mappedBy = "pet", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
+    private float score;
 
 
     public Pet() {
     }
 
-    public Pet(String name, String zip, String type, String breed, String age, String gender) {
+    public Pet(String name, String zip, String type, String breed, String age, String sex) {
         this.name = name;
         this.zip = zip;
         this.type = type;
         this.breed = breed;
         this.age = age;
-        this.gender = gender;
+        this.sex = sex;
     }
 
-    public Pet(String owner, String name, String zip, String type, String breed, String age, double weight, String gender, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos) {
+    public Pet(String owner, String name, String zip, String type, String breed, String age, double weight, String sex, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score) {
         this.owner = owner;
         this.name = name;
         this.zip = zip;
@@ -53,7 +54,7 @@ public class Pet {
         this.breed = breed;
         this.age = age;
         this.weight = weight;
-        this.gender = gender;
+        this.sex = sex;
         this.reproductiveStatus = reproductiveStatus;
         this.description = description;
         this.coverPhoto = coverPhoto;
@@ -61,6 +62,31 @@ public class Pet {
         this.reported = reported;
         this.adopted = adopted;
         this.photos = photos;
+        this.score = score;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
     }
 
     public String getName() {
@@ -101,14 +127,6 @@ public class Pet {
 
     public void setAge(String age) {
         this.age = age;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getOwner() {
@@ -194,7 +212,7 @@ public class Pet {
                 ", breed='" + breed + '\'' +
                 ", age='" + age + '\'' +
                 ", weight=" + weight +
-                ", gender='" + gender + '\'' +
+                ", sex='" + sex + '\'' +
                 ", reproductiveStatus=" + reproductiveStatus +
                 ", description='" + description + '\'' +
                 ", coverPhoto='" + coverPhoto + '\'' +
