@@ -20,7 +20,7 @@ public class Pet {
     private String breed;
     private String age;
     private double weight;
-    private String gender;
+    private String sex;
 
     private boolean reproductiveStatus;
     private String description;
@@ -42,7 +42,7 @@ public class Pet {
         this.type = type;
         this.breed = breed;
         this.age = age;
-        this.gender = gender;
+        this.sex = gender;
     }
 
     public Pet(long petId, String owner, String name, String zip, String type, String breed, String age, double weight, String gender, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score) {
@@ -54,7 +54,7 @@ public class Pet {
         this.breed = breed;
         this.age = age;
         this.weight = weight;
-        this.gender = gender;
+        this.sex = gender;
         this.reproductiveStatus = reproductiveStatus;
         this.description = description;
         this.coverPhoto = coverPhoto;
@@ -114,11 +114,11 @@ public class Pet {
     }
 
     public String getGender() {
-        return gender;
+        return sex;
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        this.sex = gender;
     }
 
     public String getOwner() {
@@ -212,7 +212,7 @@ public class Pet {
                 ", breed='" + breed + '\'' +
                 ", age='" + age + '\'' +
                 ", weight=" + weight +
-                ", gender='" + gender + '\'' +
+                ", gender='" + sex + '\'' +
                 ", reproductiveStatus=" + reproductiveStatus +
                 ", description='" + description + '\'' +
                 ", coverPhoto='" + coverPhoto + '\'' +

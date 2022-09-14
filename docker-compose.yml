@@ -75,7 +75,7 @@ services:
       - elasticsearch
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.2.0
+    image: docker.elastic.co/kibana/kibana:7.17.6
     ports:
       - "5601:5601"
     environment:

@@ -4,12 +4,12 @@ public class Source {
 
     private boolean adopted;
     private String zip;
-    private String gender;
+    private String sex;
     private String version;
     private String timestamp;
     private String type;
     private String age;
-    private long petId;
+    private long pet_id;
     private String breed;
     private String name;
 
@@ -25,15 +25,15 @@ public class Source {
     }
 
 
-    public Source(boolean adopted, String zip, String gender, String version, String timestamp, String type, String age, long petId, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description) {
+    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, long pet_id, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description) {
         this.adopted = adopted;
         this.zip = zip;
-        this.gender = gender;
+        this.sex = sex;
         this.version = version;
         this.timestamp = timestamp;
         this.type = type;
         this.age = age;
-        this.petId = petId;
+        this.pet_id = pet_id;
         this.breed = breed;
         this.name = name;
         this.reported = reported;
@@ -53,12 +53,12 @@ public class Source {
         this.zip = zip;
     }
 
-    public String getGender() {
-        return gender;
+    public String getSex() {
+        return sex;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getVersion() {
@@ -94,11 +94,11 @@ public class Source {
     }
 
     public long getPetId() {
-        return petId;
+        return pet_id;
     }
 
-    public void setPetId(long petId) {
-        this.petId = petId;
+    public void setPetId(long pet_id) {
+        this.pet_id = pet_id;
     }
 
     public String getBreed() {
@@ -186,12 +186,12 @@ public class Source {
         return "Source{" +
                 "adopted=" + adopted +
                 ", zip='" + zip + '\'' +
-                ", gender='" + gender + '\'' +
+                ", sex='" + sex + '\'' +
                 ", version='" + version + '\'' +
                 ", timestamp='" + timestamp + '\'' +
                 ", type='" + type + '\'' +
                 ", age='" + age + '\'' +
-                ", petId=" + petId +
+                ", pet_id=" + pet_id +
                 ", breed='" + breed + '\'' +
                 ", name='" + name + '\'' +
                 ", reported=" + reported +
