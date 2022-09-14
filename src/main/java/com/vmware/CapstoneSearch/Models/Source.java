@@ -10,7 +10,7 @@ public class Source {
     private String timestamp;
     private String type;
     private String age;
-    private int id;
+    private Long pet_id;
     private String breed;
     private String name;
 
@@ -26,7 +26,7 @@ public class Source {
     }
 
 
-    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, int id, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description) {
+    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, Long pet_id, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description) {
 
         this.adopted = adopted;
         this.zip = zip;
@@ -36,7 +36,7 @@ public class Source {
         this.timestamp = timestamp;
         this.type = type;
         this.age = age;
-        this.id = id;
+        this.pet_id = pet_id;
         this.breed = breed;
         this.name = name;
         this.reported = reported;
@@ -99,12 +99,12 @@ public class Source {
         this.age = age;
     }
 
-    public int getId() {
-        return id;
+    public Long getPet_id() {
+        return pet_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPet_id(Long pet_id) {
+        this.pet_id = pet_id;
     }
 
     public String getBreed() {
@@ -197,7 +197,7 @@ public class Source {
                 ", timestamp='" + timestamp + '\'' +
                 ", type='" + type + '\'' +
                 ", age='" + age + '\'' +
-                ", id=" + id +
+                ", pet_id=" + pet_id +
                 ", breed='" + breed + '\'' +
                 ", name='" + name + '\'' +
                 ", reported=" + reported +
@@ -205,9 +205,8 @@ public class Source {
                 ", cover_photo='" + cover_photo + '\'' +
                 ", favorite_count=" + favorite_count +
                 ", owner='" + owner + '\'' +
-                ", reproductive_status='" + reproductive_status + '\'' +
+                ", reproductive_status=" + reproductive_status +
                 ", description='" + description + '\'' +
                 '}';
     }
-
 }

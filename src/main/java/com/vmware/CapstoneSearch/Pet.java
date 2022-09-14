@@ -12,7 +12,7 @@ import java.util.List;
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long petId;
 
     private String owner;
     private String name;
@@ -46,7 +46,8 @@ public class Pet {
         this.sex = sex;
     }
 
-    public Pet(String owner, String name, String zip, String type, String breed, String age, double weight, String sex, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score) {
+    public Pet(Long petId, String owner, String name, String zip, String type, String breed, String age, double weight, String sex, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score) {
+        this.petId = petId;
         this.owner = owner;
         this.name = name;
         this.zip = zip;
@@ -65,12 +66,13 @@ public class Pet {
         this.score = score;
     }
 
-    public Long getId() {
-        return id;
+
+    public Long getPetId() {
+        return petId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPetId(Long petId) {
+        this.petId = petId;
     }
 
     public String getSex() {
@@ -204,7 +206,7 @@ public class Pet {
     @Override
     public String toString() {
         return "Pet{" +
-                "id=" + id +
+                "petId=" + petId +
                 ", owner='" + owner + '\'' +
                 ", name='" + name + '\'' +
                 ", zip='" + zip + '\'' +
@@ -220,6 +222,7 @@ public class Pet {
                 ", reported=" + reported +
                 ", adopted=" + adopted +
                 ", photos=" + photos +
+                ", score=" + score +
                 '}';
     }
 }
