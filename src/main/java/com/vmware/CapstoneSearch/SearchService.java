@@ -30,7 +30,7 @@ public class SearchService {
         if (zip != null) {
 //            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
 
-            String uri = "https://www.zipcodeapi.com/rest/DemoOnly006uPUlZv4X5Mfy9aBBG0spllwbnC3rHskAIbOivceG2IW0M5Z6fLbg8/radius.json/" + zip + "/" + radius + "/mile";
+            String uri = "https://www.zipcodeapi.com/rest/DemoOnly00YY1F0X8lhFDeitNw4cjgF5hQWCLen5Yw0p4F2mmkLO7I52V8Da6jd3/radius.json/" + zip + "/" + radius + "/mile";
             RestTemplate restTemplate = new RestTemplate();
             ZipList response = restTemplate.getForObject(uri, ZipList.class);
             for (Zip code : response.getZip_codes()) {
@@ -69,7 +69,6 @@ public class SearchService {
                 filteredPets = filteredPets.stream().filter(pet -> pet.getGender().equals(gender)).collect(Collectors.toList());
             }
             return new PetsList(filteredPets);
-
         } else {
             List<Pet> results = new ArrayList<>();
             ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
