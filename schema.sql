@@ -43,3 +43,6 @@ VALUES (DEFAULT, 'Buster', 'dog', '94304', 'young', 'female', 'husky');
 
 INSERT INTO pets(id, name, type, zip, age, gender, breed)
 VALUES (DEFAULT, 'Chewy', 'dog', '94028', 'adult', 'male', 'corgi');
+
+INSERT INTO pets(id, name, type, zip, age, gender, breed)
+VALUES (DEFAULT, 'Charles', 'iguana', '94328', 'adult', 'male', 'fire dragon');

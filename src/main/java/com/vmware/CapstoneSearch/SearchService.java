@@ -28,8 +28,7 @@ public class SearchService {
     public PetsList getPets(String zip, String radius, String type, String breed, String age, String gender, String search) throws JsonProcessingException {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
-//            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
-
+//            String uri = "https://www.zipcodeapi      .com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/10/mile";
             String uri = "https://www.zipcodeapi.com/rest/DemoOnly00YY1F0X8lhFDeitNw4cjgF5hQWCLen5Yw0p4F2mmkLO7I52V8Da6jd3/radius.json/" + zip + "/" + radius + "/mile";
             RestTemplate restTemplate = new RestTemplate();
             ZipList response = restTemplate.getForObject(uri, ZipList.class);
@@ -87,16 +86,16 @@ public class SearchService {
         }
     }
 
-
+    // gets documents using wildcard query
     public PetsList getSuggestions(String search) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"wildcard\":{\"name\":{\"value\":\"" + search + "*\"}}}}", headers);
+        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"query_string\":{\"query\":\"" + search + "*\",\"fields\":[\"name\",\"breed\",\"type\"]}}}", headers);
         ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
 
         List<Hit> hits = response.getBody().getHits().getHits();
-
+        System.out.println("hits ===> " + hits);
         List<Pet> convertedHitstoPets = new ArrayList<>();
         for (int i = 0; i < hits.size(); i++) {
             Source pet = hits.get(i).get_source();
