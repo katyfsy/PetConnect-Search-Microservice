@@ -9,7 +9,7 @@ public class Source {
     private String timestamp;
     private String type;
     private String age;
-    private int id;
+    private long petId;
     private String breed;
     private String name;
 
@@ -25,7 +25,7 @@ public class Source {
     }
 
 
-    public Source(boolean adopted, String zip, String gender, String version, String timestamp, String type, String age, int id, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description) {
+    public Source(boolean adopted, String zip, String gender, String version, String timestamp, String type, String age, long petId, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description) {
         this.adopted = adopted;
         this.zip = zip;
         this.gender = gender;
@@ -33,7 +33,7 @@ public class Source {
         this.timestamp = timestamp;
         this.type = type;
         this.age = age;
-        this.id = id;
+        this.petId = petId;
         this.breed = breed;
         this.name = name;
         this.reported = reported;
@@ -93,12 +93,12 @@ public class Source {
         this.age = age;
     }
 
-    public int getId() {
-        return id;
+    public long getPetId() {
+        return petId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPetId(long petId) {
+        this.petId = petId;
     }
 
     public String getBreed() {
@@ -191,7 +191,7 @@ public class Source {
                 ", timestamp='" + timestamp + '\'' +
                 ", type='" + type + '\'' +
                 ", age='" + age + '\'' +
-                ", id=" + id +
+                ", petId=" + petId +
                 ", breed='" + breed + '\'' +
                 ", name='" + name + '\'' +
                 ", reported=" + reported +

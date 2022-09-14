@@ -12,8 +12,7 @@ import java.util.List;
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private Long petId;
     private String owner;
     private String name;
     private String zip;
@@ -31,6 +30,7 @@ public class Pet {
     private boolean adopted;
     @OneToMany(mappedBy = "pet", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
+    private float score;
 
 
     public Pet() {
@@ -45,7 +45,8 @@ public class Pet {
         this.gender = gender;
     }
 
-    public Pet(String owner, String name, String zip, String type, String breed, String age, double weight, String gender, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos) {
+    public Pet(long petId, String owner, String name, String zip, String type, String breed, String age, double weight, String gender, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score) {
+        this.petId = petId;
         this.owner = owner;
         this.name = name;
         this.zip = zip;
@@ -61,6 +62,15 @@ public class Pet {
         this.reported = reported;
         this.adopted = adopted;
         this.photos = photos;
+        this.score = score;
+    }
+
+    public Long getPetId() {
+        return petId;
+    }
+
+    public void setPetId(Long petId) {
+        this.petId = petId;
     }
 
     public String getName() {
@@ -183,10 +193,18 @@ public class Pet {
         this.photos = photos;
     }
 
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
     @Override
     public String toString() {
         return "Pet{" +
-                "id=" + id +
+                "petId=" + petId +
                 ", owner='" + owner + '\'' +
                 ", name='" + name + '\'' +
                 ", zip='" + zip + '\'' +
@@ -202,6 +220,7 @@ public class Pet {
                 ", reported=" + reported +
                 ", adopted=" + adopted +
                 ", photos=" + photos +
+                ", score=" + score +
                 '}';
     }
 }
