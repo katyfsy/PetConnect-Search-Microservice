@@ -87,7 +87,7 @@ public class SearchService {
         }
     }
 
-
+    // gets documents using wildcard query
     public PetsList getSuggestions(String search) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
