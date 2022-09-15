@@ -25,7 +25,7 @@ public class SearchService {
     }
 
     // get pets based on exact matches
-    public PetsList getPets(String zip, String radius, String type, String breed, String age, String gender, String search) throws JsonProcessingException {
+    public PetsList getPets(String zip, String radius, String type, String breed, String age, String sex, String search) throws JsonProcessingException {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
             String uri = "https://www.zipcodeapi.com/rest/DemoOnly006uPUlZv4X5Mfy9aBBG0spllwbnC3rHskAIbOivceG2IW0M5Z6fLbg8/radius.json/" + zip + "/" + radius + "/mile";
@@ -44,7 +44,7 @@ public class SearchService {
             if (search.equals("*")) {
                 query = "{\"query\":{\"match_all\":{}}}";
             } else {
-                query = "{\"query\":{\"multi_match\":{\"query\":\"" + search + "\",\"type\":\"cross_fields\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"operator\":\"and\"}}}";
+                query = "{\"query\":{\"multi_match\":{\"query\":\"" + search + "\",\"type\":\"cross_fields\",\"fields\":[\"breed\",\"age\",\"sex\",\"name\",\"type\"],\"operator\":\"and\"}}}";
             }
             HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
 
@@ -70,8 +70,8 @@ public class SearchService {
             if (age != null) {
                 filteredPets = filteredPets.stream().filter(pet -> pet.getAge().equals(age)).collect(Collectors.toList());
             }
-            if (gender != null) {
-                filteredPets = filteredPets.stream().filter(pet -> pet.getSex().equals(gender)).collect(Collectors.toList());
+            if (sex != null) {
+                filteredPets = filteredPets.stream().filter(pet -> pet.getSex().equals(sex)).collect(Collectors.toList());
             }
             return new PetsList(filteredPets);
 
@@ -80,11 +80,11 @@ public class SearchService {
             ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
             if (zips.size() > 0) {
                 for (int i = 0; i < zips.size(); i++) {
-                    Example<Pet> exampleQuery = Example.of(new Pet(null, zips.get(i), type, breed, age, gender), matcher);
+                    Example<Pet> exampleQuery = Example.of(new Pet(null, zips.get(i), type, breed, age, sex), matcher);
                     results.addAll(petsRepository.findAll(exampleQuery));
                 }
             } else {
-                Example<Pet> exampleQuery = Example.of(new Pet(null, zip, type, breed, age, gender), matcher);
+                Example<Pet> exampleQuery = Example.of(new Pet(null, zip, type, breed, age, sex), matcher);
                 results.addAll(petsRepository.findAll(exampleQuery));
             }
 
