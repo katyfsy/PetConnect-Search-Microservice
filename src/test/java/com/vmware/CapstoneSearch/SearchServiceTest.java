@@ -114,9 +114,9 @@ class SearchServiceTest {
 
 //    @Test
 //    void getSuggestions_SearchArg_returnsList() {
-//        Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
-//        when(petsRepository.findAll()).thenReturn(List.of(pet));
-//        PetsList petsList = searchService.getSuggestions("b");
+////        Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
+////        when(petsRepository.findAll()).thenReturn(List.of(pet));
+//        PetsList petsList = searchService.getSuggestions("d");
 //        assertThat(petsList).isNotNull();
 //        assertThat(petsList.isEmpty()).isFalse();
 //    }
