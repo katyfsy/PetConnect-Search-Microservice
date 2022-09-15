@@ -52,14 +52,14 @@ services:
         soft: -1
         hard: -1
 
-  elastichq:
-    image: elastichq/elasticsearch-hq
-    ports:
-      - "5000:5000"
-    links:
-      - elasticsearch
-    depends_on:
-      - elasticsearch
+#  elastichq:
+#    image: elastichq/elasticsearch-hq
+#    ports:
+#      - "5000:5000"
+#    links:
+#      - elasticsearch
+#    depends_on:
+#      - elasticsearch
 
   logstash:
     image: docker.elastic.co/logstash/logstash:7.17.6
@@ -74,16 +74,16 @@ services:
     depends_on:
       - elasticsearch
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.2.0
-    ports:
-      - "5601:5601"
-    environment:
-      - ELASTICSEACH_URL=http://elasticsearch:9200
-    links:
-      - elasticsearch
-    depends_on:
-      - elasticsearch
+#  kibana:
+#    image: docker.elastic.co/kibana/kibana:7.17.6
+#    ports:
+#      - "5601:5601"
+#    environment:
+#      - ELASTICSEACH_URL=http://elasticsearch:9200
+#    links:
+#      - elasticsearch
+#    depends_on:
+#      - elasticsearch
 
 volumes:
   postgres_data:

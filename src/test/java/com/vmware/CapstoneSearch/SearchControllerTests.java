@@ -104,14 +104,14 @@ public class SearchControllerTests {
     }
 
     @Test
-    void getPets_genderParam_exists_returnsPetsList() throws Exception {
+    void getPets_sexParam_exists_returnsPetsList() throws Exception {
         //arrange
         List<Pet> pets = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
         when(searchService.getPets(null, "10",null, null, null, "female", null)).thenReturn(new PetsList(pets));
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?gender=female"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?sex=female"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pets", hasSize(5)));
