@@ -40,7 +40,14 @@ public class SearchService {
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"multi_match\":{\"query\":\"" + search + "\",\"type\":\"cross_fields\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"operator\":\"and\"}}}", headers);
+            String query;
+            if (search.equals("*")) {
+                query = "{\"query\":{\"match_all\":{}}}";
+            } else {
+                query = "{\"query\":{\"multi_match\":{\"query\":\"" + search + "\",\"type\":\"cross_fields\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"operator\":\"and\"}}}";
+            }
+            HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
+
 
             ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
             List<Hit> hits = response.getBody().getHits().getHits();
@@ -54,6 +61,7 @@ public class SearchService {
                     convertedHitstoPets.add(new Pet(pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getGender()));
                 }
             }
+            System.out.println("*****converted pets***" + convertedHitstoPets);
             List<Pet> filteredPets = convertedHitstoPets;
             if (type != null) {
                 filteredPets = filteredPets.stream().filter(pet -> pet.getType().equals(type)).collect(Collectors.toList());
@@ -68,6 +76,7 @@ public class SearchService {
                 filteredPets = filteredPets.stream().filter(pet -> pet.getGender().equals(gender)).collect(Collectors.toList());
             }
             return new PetsList(filteredPets);
+
         } else {
             List<Pet> results = new ArrayList<>();
             ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();

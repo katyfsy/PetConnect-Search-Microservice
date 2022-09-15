@@ -18,7 +18,7 @@ services:
     entrypoint: ["/bin/sh", "entrypoint.sh"]
 
   db:
-    image: postgres:10.2
+    image: postgres
     volumes:
       - postgres_data:/var/lib/postgresl/data/
     ports:
