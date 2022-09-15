@@ -8,8 +8,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,6 +91,43 @@ public class SearchService {
 
             return new PetsList(results);
         }
+    }
+
+    public List<String> getBreeds(String type) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        String query = "{\"query\":{\"match_all\":{}}}";
+        HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
+
+        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
+        List<Hit> hits = response.getBody().getHits().getHits();
+
+        List<Pet> convertedHitstoPets = new ArrayList<>();
+        for (int i = 0; i < hits.size(); i++) {
+            Source pet = hits.get(i).get_source();
+            convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getAge(), pet.getWeight(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score()));
+            }
+        List<Pet> filteredPets = convertedHitstoPets;
+        if (type != null) {
+            filteredPets = filteredPets.stream().filter(pet -> pet.getType().equals(type)).collect(Collectors.toList());
+        }
+        List<Breed> filteredBreeds = new ArrayList<>();
+        for (int i = 0; i < filteredPets.size(); i++) {
+            filteredBreeds.add(new Breed(filteredPets.get(i).getBreed()));
+        }
+
+
+//        List<Breed> uniqueBreeds
+//                = filteredBreeds.stream().distinct().collect(
+//                Collectors.toList());
+        Set<String> uniqueBreeds = new HashSet<String>();
+        for (int i = 0; i < filteredPets.size(); i++) {
+            uniqueBreeds.add(filteredPets.get(i).getBreed());
+        }
+        System.out.println("*******filteredbreeds*******" + uniqueBreeds);
+        return List.copyOf(uniqueBreeds);
     }
 
     // gets documents using wildcard query

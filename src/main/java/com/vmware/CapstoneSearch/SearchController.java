@@ -3,6 +3,9 @@ package com.vmware.CapstoneSearch;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 //allowing frontend in from port 3000
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
@@ -20,6 +23,13 @@ public class SearchController {
         PetsList petsList;
         petsList = searchService.getPets(zip, radius, type, breed, age, sex, search);
         return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
+    }
+
+    @GetMapping("/api/breeds")
+    public ResponseEntity<List> getBreeds(@RequestParam(required = false) String type) {
+//        System.out.println("got request");
+        List<String> breedList = searchService.getBreeds(type);
+        return breedList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(breedList);
     }
 
     @PostMapping("/api/petSearch")
