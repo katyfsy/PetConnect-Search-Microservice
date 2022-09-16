@@ -118,15 +118,11 @@ public class SearchService {
             filteredBreeds.add(new Breed(filteredPets.get(i).getBreed()));
         }
 
-
-//        List<Breed> uniqueBreeds
-//                = filteredBreeds.stream().distinct().collect(
-//                Collectors.toList());
         Set<String> uniqueBreeds = new HashSet<String>();
         for (int i = 0; i < filteredPets.size(); i++) {
             uniqueBreeds.add(filteredPets.get(i).getBreed());
         }
-        System.out.println("*******filteredbreeds*******" + uniqueBreeds);
+//        System.out.println("*******filteredbreeds*******" + uniqueBreeds);
         return List.copyOf(uniqueBreeds);
     }
 
