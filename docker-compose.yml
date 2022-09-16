@@ -1,24 +1,24 @@
 version: '2.1'
 
 services:
-
   app:
     build: .
-#    volumes:
-#      - .:/app
+    #    volumes:
+    #      - .:/app
     ports:
-      - "8080:8080"
+#      -  "8080:8080"
 #    depends_on:
-#      db:
-#        condition: service_healthy
+#        db:
+#          condition: service_healthy
 #    links:
-#      - db
+#          - db
     env_file:
       - core.env
     entrypoint: ["/bin/sh", "entrypoint.sh"]
 
+
 #  db:
-#    image: postgres:10.2
+#    image: postgres
 #    volumes:
 #      - postgres_data:/var/lib/postgresl/data/
 #    ports:
@@ -87,4 +87,6 @@ services:
 
 volumes:
   postgres_data:
+      driver: local
   es_data:
+      driver: local
