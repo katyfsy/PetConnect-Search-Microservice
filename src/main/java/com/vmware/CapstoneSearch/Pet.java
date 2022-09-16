@@ -1,9 +1,11 @@
 package com.vmware.CapstoneSearch;
 
 import com.vmware.CapstoneSearch.Models.Photo;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,23 +18,31 @@ public class Pet {
 
     private String owner;
     private String name;
+    private String city;
+    private String state;
     private String zip;
     private String type;
     private String breed;
-    private String age;
+    private String species;
     private double weight;
+    private String age;
+
     private String sex;
 
     private boolean reproductiveStatus;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String coverPhoto;
     private int favoriteCount;
     private boolean reported;
     private boolean adopted;
-    @OneToMany(mappedBy = "pet", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pet", fetch=FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
     private float score;
-
+    @Column(name = "date_posted", updatable = false)
+    @CreatedDate
+    private Date datePosted;
 
     public Pet() {
     }
@@ -46,15 +56,18 @@ public class Pet {
         this.sex = sex;
     }
 
-    public Pet(Long petId, String owner, String name, String zip, String type, String breed, String age, double weight, String sex, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score) {
+    public Pet(Long petId, String owner, String name, String city, String state, String zip, String type, String breed, String species, double weight, String age, String sex, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score, Date datePosted) {
         this.petId = petId;
         this.owner = owner;
         this.name = name;
+        this.city = city;
+        this.state = state;
         this.zip = zip;
         this.type = type;
         this.breed = breed;
-        this.age = age;
+        this.species = species;
         this.weight = weight;
+        this.age = age;
         this.sex = sex;
         this.reproductiveStatus = reproductiveStatus;
         this.description = description;
@@ -64,8 +77,8 @@ public class Pet {
         this.adopted = adopted;
         this.photos = photos;
         this.score = score;
+        this.datePosted = datePosted;
     }
-
 
     public Long getPetId() {
         return petId;
@@ -203,17 +216,52 @@ public class Pet {
         this.photos = photos;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public Date getDatePosted() {
+        return datePosted;
+    }
+
+    public void setDatePosted(Date datePosted) {
+        this.datePosted = datePosted;
+    }
+
     @Override
     public String toString() {
         return "Pet{" +
                 "petId=" + petId +
                 ", owner='" + owner + '\'' +
                 ", name='" + name + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
                 ", zip='" + zip + '\'' +
                 ", type='" + type + '\'' +
                 ", breed='" + breed + '\'' +
-                ", age='" + age + '\'' +
+                ", species='" + species + '\'' +
                 ", weight=" + weight +
+                ", age='" + age + '\'' +
                 ", sex='" + sex + '\'' +
                 ", reproductiveStatus=" + reproductiveStatus +
                 ", description='" + description + '\'' +
@@ -223,6 +271,7 @@ public class Pet {
                 ", adopted=" + adopted +
                 ", photos=" + photos +
                 ", score=" + score +
+                ", datePosted=" + datePosted +
                 '}';
     }
 }

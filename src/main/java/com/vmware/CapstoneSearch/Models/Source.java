@@ -1,5 +1,7 @@
 package com.vmware.CapstoneSearch.Models;
 
+import java.util.Date;
+
 public class Source {
 
     private boolean adopted;
@@ -21,17 +23,20 @@ public class Source {
     private String owner;
     private boolean reproductive_status;
     private String description;
+    private String city;
+    private String state;
+    private String species;
+    private Date date_posted;
+
 
     public Source() {
     }
 
 
-    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, Long pet_id, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description) {
-
+    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, Long pet_id, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description, String city, String state, String species, Date date_posted) {
         this.adopted = adopted;
         this.zip = zip;
         this.sex = sex;
-
         this.version = version;
         this.timestamp = timestamp;
         this.type = type;
@@ -46,6 +51,10 @@ public class Source {
         this.owner = owner;
         this.reproductive_status = reproductive_status;
         this.description = description;
+        this.city = city;
+        this.state = state;
+        this.species = species;
+        this.date_posted = date_posted;
     }
 
     public String getZip() {
@@ -187,6 +196,38 @@ public class Source {
         this.description = description;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public Date getDate_posted() {
+        return date_posted;
+    }
+
+    public void setDate_posted(Date date_posted) {
+        this.date_posted = date_posted;
+    }
+
     @Override
     public String toString() {
         return "Source{" +
@@ -207,6 +248,10 @@ public class Source {
                 ", owner='" + owner + '\'' +
                 ", reproductive_status=" + reproductive_status +
                 ", description='" + description + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", species='" + species + '\'' +
+                ", date_posted=" + date_posted +
                 '}';
     }
 }
