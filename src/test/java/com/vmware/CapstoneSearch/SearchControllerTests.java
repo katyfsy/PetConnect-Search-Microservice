@@ -143,6 +143,7 @@ public class SearchControllerTests {
                 .andExpect(jsonPath("$.pets", hasSize(5)));
     }
 
+
     @Test
     void postPets_valid_returnsPet() throws Exception {
         Pet pet = new Pet("Charles", "99111", "iguana", "fire dragon", "adult", "male");
@@ -171,6 +172,32 @@ public class SearchControllerTests {
               .andExpect(status().isOk())
               .andExpect(jsonPath("$.pets", hasSize(5)));
   }
+
+//    @Test
+//    void getBreeds_typeParam_exists_returnsBreedList() throws Exception {
+//        List<String> breeds = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            breeds.add("husky");
+//        }
+//        when(searchService.getBreeds("dog")).thenReturn(breeds);
+//        mockMvc.perform(MockMvcRequestBuilders.get("/api/breeds?type=dog"))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.breeds", hasSize(5)));
+//    }
+//
+//    @Test
+//    void getBreeds_noParam_returnsBreedList() throws Exception {
+//        List<String> breeds = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            breeds.add("husky");
+//        }
+//        when(searchService.getBreeds(null)).thenReturn(breeds);
+//        mockMvc.perform(MockMvcRequestBuilders.get("/api/breeds"))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.breeds", hasSize(5)));
+//    }
 
 
 }

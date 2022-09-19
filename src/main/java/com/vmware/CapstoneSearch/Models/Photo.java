@@ -3,17 +3,21 @@ package com.vmware.CapstoneSearch.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.vmware.CapstoneSearch.Pet;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "pets_photos")
+@Table(name = "pets_photos", indexes = {@Index(columnList = "pet_id")})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Photo {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long photoId;
     //    private Long petId;
     private String photo_url;
+
+
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="pet_id", nullable = false)
     @JsonIgnore
@@ -62,4 +66,5 @@ public class Photo {
                 '}';
     }
 }
+
 

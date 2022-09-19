@@ -1,35 +1,35 @@
 version: '2.1'
 
 services:
-
   app:
     build: .
-    #volumes:
-    #  - .:/app
+    #    volumes:
+    #      - .:/app
     ports:
-      - "8080:8080"
+#      -  "8080:8080"
 #    depends_on:
-#      db:
-#        condition: service_healthy
+#        db:
+#          condition: service_healthy
 #    links:
-#      - db
+#          - db
     env_file:
       - core.env
     entrypoint: ["/bin/sh", "entrypoint.sh"]
 
-  db:
-    image: postgres:10.2
-    volumes:
-      - postgres_data:/var/lib/postgresl/data/
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
-    env_file:
-      - core.env
+
+#  db:
+#    image: postgres
+#    volumes:
+#      - postgres_data:/var/lib/postgresl/data/
+#    ports:
+#      - "5432:5432"
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -U postgres"]
+#      interval: 10s
+#      timeout: 10s
+#      retries: 3
+#    env_file:
+#      - core.env
 
   # running on a single node for development.
   # prod settings here: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode
@@ -87,4 +87,6 @@ services:
 
 volumes:
   postgres_data:
+      driver: local
   es_data:
+      driver: local
