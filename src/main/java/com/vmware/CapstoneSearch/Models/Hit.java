@@ -22,9 +22,7 @@ public class Hit {
         return _index;
     }
 
-    public void set_index(String _index) {
-        this._index = _index;
-    }
+    public void set_index(String _index) { this._index = _index;}
 
     public String get_type() {
         return _type;
