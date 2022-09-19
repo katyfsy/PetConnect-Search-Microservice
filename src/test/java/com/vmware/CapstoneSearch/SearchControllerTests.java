@@ -40,7 +40,7 @@ public class SearchControllerTests {
             pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
         //act
-        when(searchService.getPets(null, "10",null, null, null, null, null)).thenReturn(new PetsList(pets));
+        when(searchService.getPets(null, "10",null, null, null, null, null, null)).thenReturn(new PetsList(pets));
         //assert
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch"))
                 .andDo(print())
@@ -55,7 +55,7 @@ public class SearchControllerTests {
         for (int i = 0; i < 5; i++) {
             pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets("12345", "10",null, null, null, null, null)).thenReturn(new PetsList(pets));
+        when(searchService.getPets("12345", "10",null, null, null, null, null, null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?zip=12345"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -68,7 +68,7 @@ public class SearchControllerTests {
         for (int i = 0; i < 5; i++) {
             pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets(null, "10","dog", null, null, null, null)).thenReturn(new PetsList(pets));
+        when(searchService.getPets(null, "10","dog", null, null, null, null, null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?type=dog"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -82,7 +82,7 @@ public class SearchControllerTests {
         for (int i = 0; i < 5; i++) {
             pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets(null, "10",null, "husky", null, null, null)).thenReturn(new PetsList(pets));
+        when(searchService.getPets(null, "10",null, "husky", null, null, null, null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?breed=husky"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -96,7 +96,7 @@ public class SearchControllerTests {
         for (int i = 0; i < 5; i++) {
             pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets(null, "10", null, null, "young", null, null)).thenReturn(new PetsList(pets));
+        when(searchService.getPets(null, "10", null, null, "young", null, null, null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?age=young"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -110,7 +110,7 @@ public class SearchControllerTests {
         for (int i = 0; i < 5; i++) {
             pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets(null, "10",null, null, null, "female", null)).thenReturn(new PetsList(pets));
+        when(searchService.getPets(null, "10",null, null, null, "female", null, null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?sex=female"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -123,7 +123,7 @@ public class SearchControllerTests {
         for (int i = 0; i < 5; i++) {
             pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets("12345", "10","dog", null, null, null, null)).thenReturn(new PetsList(pets));
+        when(searchService.getPets("12345", "10","dog", null, null, null, null, null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?zip=12345&type=dog"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -136,7 +136,7 @@ public class SearchControllerTests {
         for (int i = 0; i < 5; i++) {
             pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
         }
-        when(searchService.getPets(null, "10",null, null, null, null, "dog")).thenReturn(new PetsList(pets));
+        when(searchService.getPets(null, "10",null, null, null, null, "dog", null)).thenReturn(new PetsList(pets));
         mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?search=dog"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -154,6 +154,19 @@ public class SearchControllerTests {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("type").value("iguana"));
+    }
+
+    @Test
+    void getPets_AdoptedParam_exists_returnsPetsLists() throws Exception {
+        List<Pet> pets = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
+        }
+        when(searchService.getPets(null, "10",null, null, null, null, null, "false")).thenReturn(new PetsList(pets));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/petSearch?adopted=false"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pets", hasSize(5)));
     }
 
   // searching one char at a time - generates autocomplete options

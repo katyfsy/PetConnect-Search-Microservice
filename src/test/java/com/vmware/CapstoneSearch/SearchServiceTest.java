@@ -34,7 +34,7 @@ class SearchServiceTest {
     void getPets_noArgs_returnsList() throws JsonProcessingException {
         Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, "10",null, null, null, null, null);
+        PetsList petsList = searchService.getPets(null, "10",null, null, null, null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -52,7 +52,7 @@ class SearchServiceTest {
     void getPets_TypeArg_returnsList() throws JsonProcessingException {
         Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, "10","dog", null, null, null, null);
+        PetsList petsList = searchService.getPets(null, "10","dog", null, null, null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -61,7 +61,7 @@ class SearchServiceTest {
     void getPets_BreedArg_returnsList() throws JsonProcessingException {
         Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, "10",null, "husky", null, null, null);
+        PetsList petsList = searchService.getPets(null, "10",null, "husky", null, null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -70,7 +70,7 @@ class SearchServiceTest {
     void getPets_AgeArg_returnsList() throws JsonProcessingException {
         Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, "10",null, null, "young", null, null);
+        PetsList petsList = searchService.getPets(null, "10",null, null, "young", null, null, null);
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
@@ -79,7 +79,16 @@ class SearchServiceTest {
     void getPets_SexArg_returnsList() throws JsonProcessingException {
         Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        PetsList petsList = searchService.getPets(null, "10",null, null, null, "female", null);
+        PetsList petsList = searchService.getPets(null, "10",null, null, null, "female", null, null);
+        assertThat(petsList).isNotNull();
+        assertThat(petsList.isEmpty()).isFalse();
+    }
+
+    @Test
+    void getPets_AdoptedArg_returnsList() throws JsonProcessingException {
+        Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
+        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
+        PetsList petsList = searchService.getPets(null, "10",null, null, null, null, null, "true");
         assertThat(petsList).isNotNull();
         assertThat(petsList.isEmpty()).isFalse();
     }
