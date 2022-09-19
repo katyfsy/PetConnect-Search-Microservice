@@ -24,7 +24,7 @@ public class SearchService {
     }
 
     // get pets based on exact matches
-    public PetsList getPets(String zip, String radius, String type, String breed, String age, String sex, String search) throws JsonProcessingException {
+    public PetsList getPets(String zip, String radius, String type, String breed, String age, String sex, String search, String adopted) throws JsonProcessingException {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
 
@@ -75,6 +75,18 @@ public class SearchService {
             }
             if (sex != null) {
                 filteredPets = filteredPets.stream().filter(pet -> pet.getSex().equals(sex)).collect(Collectors.toList());
+            }
+
+            boolean adoptedStatus = false;
+            if(adopted != null){
+                if (adopted.equals("true")) {
+                    adoptedStatus = true;
+                }
+            }
+
+            if (adopted != null) {
+                boolean finalAdoptedStatus = adoptedStatus;
+                filteredPets = filteredPets.stream().filter(pet -> pet.isAdopted() == finalAdoptedStatus).collect(Collectors.toList());
             }
             return new PetsList(filteredPets);
 
