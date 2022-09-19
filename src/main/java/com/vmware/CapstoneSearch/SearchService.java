@@ -78,8 +78,10 @@ public class SearchService {
             }
 
             boolean adoptedStatus = false;
-            if (adopted.equals("true")) {
-                adoptedStatus = true;
+            if(adopted != null){
+                if (adopted.equals("true")) {
+                    adoptedStatus = true;
+                }
             }
 
             if (adopted != null) {
