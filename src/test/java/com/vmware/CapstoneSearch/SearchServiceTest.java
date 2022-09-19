@@ -76,7 +76,7 @@ class SearchServiceTest {
     }
 
     @Test
-    void getPets_GenderArg_returnsList() throws JsonProcessingException {
+    void getPets_SexArg_returnsList() throws JsonProcessingException {
         Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
         when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
         PetsList petsList = searchService.getPets(null, "10",null, null, null, "female", null);
