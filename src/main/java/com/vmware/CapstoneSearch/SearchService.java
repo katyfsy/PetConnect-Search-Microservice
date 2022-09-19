@@ -128,12 +128,12 @@ public class SearchService {
         return List.copyOf(uniqueBreeds);
     }
 
-    // gets documents using wildcard query
+    // gets documents using filter (adopted), multi-match, fuzziness and limited number of responses sorted by score
     public PetsList getSuggestions(String search) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"multi_match\":{\"query\":\"" + search + "*\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"fuzziness\":\"2\"}}}", headers);
+        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"from\":0,\"size\":3,\"sort\":\"score\",\"query\":{\"bool\":{\"must\":{\"multi_match\":{\"query\":\"" + search +"*\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"fuzziness\":\"2\"}}}}}", headers);
         ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
 
         List<Hit> hits = response.getBody().getHits().getHits();
