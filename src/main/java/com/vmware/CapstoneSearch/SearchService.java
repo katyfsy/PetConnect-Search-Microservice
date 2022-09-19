@@ -24,7 +24,7 @@ public class SearchService {
     }
 
     // get pets based on exact matches
-    public PetsList getPets(String zip, String radius, String type, String breed, String age, String sex, String search) throws JsonProcessingException {
+    public PetsList getPets(String zip, String radius, String type, String breed, String age, String sex, String search, String adopted) throws JsonProcessingException {
         List<String> zips = new ArrayList<>();
         if (zip != null) {
 
@@ -75,6 +75,18 @@ public class SearchService {
             }
             if (sex != null) {
                 filteredPets = filteredPets.stream().filter(pet -> pet.getSex().equals(sex)).collect(Collectors.toList());
+            }
+
+            boolean adoptedStatus = false;
+            if(adopted != null){
+                if (adopted.equals("true")) {
+                    adoptedStatus = true;
+                }
+            }
+
+            if (adopted != null) {
+                boolean finalAdoptedStatus = adoptedStatus;
+                filteredPets = filteredPets.stream().filter(pet -> pet.isAdopted() == finalAdoptedStatus).collect(Collectors.toList());
             }
             return new PetsList(filteredPets);
 
@@ -128,12 +140,12 @@ public class SearchService {
         return List.copyOf(uniqueBreeds);
     }
 
-    // gets documents using wildcard query
+    // gets documents using filter (adopted), multi-match, fuzziness and limited number of responses sorted by score
     public PetsList getSuggestions(String search) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"multi_match\":{\"query\":\"" + search + "*\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"fuzziness\":\"2\"}}}", headers);
+        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"from\":0,\"size\":3,\"sort\":\"score\",\"query\":{\"bool\":{\"must\":{\"multi_match\":{\"query\":\"" + search +"*\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"fuzziness\":\"2\"}}}}}", headers);
         ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
 
         List<Hit> hits = response.getBody().getHits().getHits();

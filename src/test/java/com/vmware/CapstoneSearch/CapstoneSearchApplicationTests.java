@@ -105,8 +105,8 @@ class CapstoneSearchApplicationTests {
 	}
 
 	@Test
-	void getPetsByGender_exists_returnsPetsList() {
-		ResponseEntity<PetsList> response = restTemplate.getForEntity("/api/petSearch?gender=female", PetsList.class);
+	void getPetsBySex_exists_returnsPetsList() {
+		ResponseEntity<PetsList> response = restTemplate.getForEntity("/api/petSearch?sex=female", PetsList.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody()).isNotNull();
 		assertThat(response.getBody().isEmpty()).isFalse();
