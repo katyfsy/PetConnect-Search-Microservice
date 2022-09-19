@@ -74,16 +74,16 @@ services:
     depends_on:
       - elasticsearch
 
-#  kibana:
-#    image: docker.elastic.co/kibana/kibana:7.17.6
-#    ports:
-#      - "5601:5601"
-#    environment:
-#      - ELASTICSEACH_URL=http://elasticsearch:9200
-#    links:
-#      - elasticsearch
-#    depends_on:
-#      - elasticsearch
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.6
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEACH_URL=http://elasticsearch:9200
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
 
 volumes:
   postgres_data:
