@@ -65,6 +65,59 @@ INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reprod
 VALUES (DEFAULT, 'Owner', 'Winston', 'dog', '94020', 'senior', 'male', 'mutt', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, true, 0, 'some city', 'some state', 'some species', DEFAULT);
 
 INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
-VALUES (DEFAULT, 'Owner', 'Fuzz Aldrin', 'cat', '94020', 'young', 'male', 'siamese', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+VALUES (DEFAULT, 'Owner', 'Fuzz Aldrin', 'cat', '88569', 'young', 'male', 'siamese', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Colby', 'cat', '99874', 'young', 'male', 'persian', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Mirabella', 'cat', '88745', 'young', 'female', 'burmese', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Bubbles', 'cat', '33697', 'adult', 'male', 'short hair', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Cheddar', 'cat', '33654', 'adult', 'female', 'american short hair', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Leo', 'cat', '55874', 'adult', 'male', 'birman', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Cora', 'cat', '22698', 'senior', 'female', 'nebelung', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Ajax', 'cat', '33698', 'adult', 'male', 'british long hair', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Andromeda', 'cat', '98745', 'senior', 'female', 'american long hair', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
 
 
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Perseus', 'dog', '91267', 'adult', 'male', 'german shepherd', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Thor', 'dog', '92428', 'adult', 'male', 'terrier', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Hector', 'dog', '93328', 'young', 'male', 'chihuahua', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Archie', 'dog', '94033', 'young', 'male', 'border collie', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Orion', 'dog', '55488', 'senior', 'male', 'dachshund', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Lulu', 'dog', '66982', 'young', 'female', 'belgian malinois', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Dorothy', 'dog', '86982', 'young', 'female', 'boxer', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Calypso', 'dog', '69982', 'young', 'female', 'labrador', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Cassandra', 'dog', '79982', 'senior', 'female', 'greyhound', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Maia', 'dog', '89982', 'adult', 'female', 'tibetan spaniel', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);

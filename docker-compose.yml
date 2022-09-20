@@ -52,14 +52,14 @@ services:
         soft: -1
         hard: -1
 
-#  elastichq:
-#    image: elastichq/elasticsearch-hq
-#    ports:
-#      - "5000:5000"
-#    links:
-#      - elasticsearch
-#    depends_on:
-#      - elasticsearch
+  elastichq:
+    image: elastichq/elasticsearch-hq
+    ports:
+      - "5000:5000"
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
 
   logstash:
     image: docker.elastic.co/logstash/logstash:7.17.6

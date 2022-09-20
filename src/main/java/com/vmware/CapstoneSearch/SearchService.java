@@ -140,12 +140,12 @@ public class SearchService {
         return List.copyOf(uniqueBreeds);
     }
 
-    // gets documents using filter (adopted), multi-match, fuzziness and limited number of responses sorted by score
+    // gets documents using filter (adopted), multi-match, fuzziness and max responses (10) sorted by score
     public PetsList getSuggestions(String search) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"multi_match\":{\"query\":\"" + search + "*\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"fuzziness\":\"2\"}}}", headers);
+        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"sort\":[{\"@timestamp\":{\"order\":\"asc\",\"format\":\"strict_date_optional_time_nanos\"}},\"_score\"],\"size\":10,\"query\":{\"function_score\":{\"query\":{\"bool\":{\"filter\":{\"term\":{\"adopted\":false}},\"must\":{\"multi_match\":{\"query\":\"" + search + "*\",\"fields\":[\"breed\",\"name\",\"type\",\"description\"],\"fuzziness\":\"2\"}}}},\"script_score\":{\"script\":{\"source\":\"_score\"}}}}}", headers);
         ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
 
         List<Hit> hits = response.getBody().getHits().getHits();
@@ -153,10 +153,7 @@ public class SearchService {
         List<Pet> convertedHitstoPets = new ArrayList<>();
         for (int i = 0; i < hits.size(); i++) {
             Source pet = hits.get(i).get_source();
-            if (!pet.isAdopted()) {
-//            System.out.println("***********pet is adopted?" +  pet.isAdopted());
                 convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
-            }
         }
         return new PetsList(convertedHitstoPets);
     }
