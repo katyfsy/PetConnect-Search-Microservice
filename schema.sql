@@ -63,3 +63,8 @@ VALUES (DEFAULT, 'Owner', 'Charles', 'iguana', '94328', 'adult', 'male', 'fire d
 
 INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
 VALUES (DEFAULT, 'Owner', 'Winston', 'dog', '94020', 'senior', 'male', 'mutt', 10, true, 'dog', 'https://images.pexels.com/photos/58997/pexels-photo-58997.jpeg', 0, false, true, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+INSERT INTO pets(pet_id, owner, name, type, zip, age, sex, breed, weight, reproductive_status, description, cover_photo, favorite_count, reported, adopted, score, city, state, species, date_posted)
+VALUES (DEFAULT, 'Owner', 'Fuzz Aldrin', 'cat', '94020', 'young', 'male', 'siamese', 10, true, 'cat', 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg', 0, false, false, 0, 'some city', 'some state', 'some species', DEFAULT);
+
+
