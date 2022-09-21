@@ -45,4 +45,11 @@ public class SearchController {
         return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
     }
 
+    @GetMapping("/api/advSearch")
+    public ResponseEntity<PetsList> filterPets(@RequestParam(required = false) String zip,  @RequestParam(required = false, defaultValue="10") String radius, @RequestParam(required = false) String type, @RequestParam(required = false) String breed, @RequestParam(required = false) String age, @RequestParam(required = false) String sex, @RequestParam(required = false) String search, @RequestParam(required = false) String adopted) throws JsonProcessingException {
+        PetsList petsList;
+        petsList = searchService.filterPets(zip, radius, type, breed, age, sex, search, adopted);
+        return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
+    }
+
 }
