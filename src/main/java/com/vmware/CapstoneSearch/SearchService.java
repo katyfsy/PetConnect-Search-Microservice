@@ -124,8 +124,11 @@ public class SearchService {
             convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
             }
         List<Pet> filteredPets = convertedHitstoPets;
-        if (type != null) {
+        if (type.equals("cat") || type.equals("dog")) {
             filteredPets = filteredPets.stream().filter(pet -> pet.getType().equals(type)).collect(Collectors.toList());
+        }
+        if (type.equals("other")) {
+            filteredPets = filteredPets.stream().filter(pet -> !pet.getType().equals("cat") && !pet.getType().equals("dog")).collect(Collectors.toList());
         }
         List<Breed> filteredBreeds = new ArrayList<>();
         for (int i = 0; i < filteredPets.size(); i++) {
@@ -156,6 +159,78 @@ public class SearchService {
                 convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
         }
         return new PetsList(convertedHitstoPets);
+    }
+
+    public PetsList filterPets(String zip, String radius, String type, String breed, String age, String sex, String search, String adopted) {
+        List<String> zips = new ArrayList<>();
+        if (zip != null) {
+
+//            String uri = "https://www.zipcodeapi.com/rest/DemoOnly00YY1F0X8lhFDeitNw4cjgF5hQWCLen5Yw0p4F2mmkLO7I52V8Da6jd3/radius.json/" + zip + "/" + radius + "/mile";
+
+            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/"+ radius + "/mile";
+
+            RestTemplate restTemplate = new RestTemplate();
+            ZipList response = restTemplate.getForObject(uri, ZipList.class);
+            for (Zip code : response.getZip_codes()) {
+                zips.add(code.zip_code);
+            }
+        }
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String query;
+        //main search: only zip
+        //adv search: type = other
+        //should return: list of all other pets
+        if (search == null && type.equals("other")) {
+            query = "{\"query\":{\"bool\":{\"must_not\":[{\"terms\":{\"type\":[\"cat\",\"dog\"]}}]}}}";
+            //main search: any string
+            //adv search: type = other
+        } else if (type.equals("other") && search != null) {
+            query = "{\"query\":{\"bool\":{\"must\":[{\"multi_match\":{\"query\":\"" + search + "\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"fuzziness\":\"2\"}}],\"must_not\":[{\"terms\":{\"type\":[\"cat\",\"dog\"]}}]}}}";
+        } else {
+            query = "{\"query\":{\"multi_match\":{\"query\":\"" + search + "*\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"fuzziness\":\"2\"}}}";
+        }
+        HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
+
+        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
+        List<Hit> hits = response.getBody().getHits().getHits();
+//            System.out.println(hits);
+        List<Pet> convertedHitstoPets = new ArrayList<>();
+        for (int i = 0; i < hits.size(); i++) {
+            Source pet = hits.get(i).get_source();
+            if (zip != null && zips.contains(pet.getZip())) {
+                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
+            } else if (zip == null) {
+                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
+            }
+        }
+        System.out.println(convertedHitstoPets);
+        List<Pet> filteredPets = convertedHitstoPets;
+        if (type.equals("cat") || type.equals("dog")) {
+            filteredPets = filteredPets.stream().filter(pet -> pet.getType().equals(type)).collect(Collectors.toList());
+        }
+        if (breed != null) {
+            filteredPets = filteredPets.stream().filter(pet -> pet.getBreed().equals(breed)).collect(Collectors.toList());
+        }
+        if (age != null) {
+            filteredPets = filteredPets.stream().filter(pet -> pet.getAge().equals(age)).collect(Collectors.toList());
+        }
+        if (sex != null) {
+            filteredPets = filteredPets.stream().filter(pet -> pet.getSex().equals(sex)).collect(Collectors.toList());
+        }
+
+        boolean adoptedStatus = false;
+        if(adopted != null){
+            if (adopted.equals("true")) {
+                adoptedStatus = true;
+            }
+        }
+        if (adopted != null) {
+            boolean finalAdoptedStatus = adoptedStatus;
+            filteredPets = filteredPets.stream().filter(pet -> pet.isAdopted() == finalAdoptedStatus).collect(Collectors.toList());
+        }
+        return new PetsList(filteredPets);
     }
 
 }
