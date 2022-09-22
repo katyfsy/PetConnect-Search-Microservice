@@ -39,7 +39,7 @@ public class SearchController {
 
     // approximate search - returns autocomplete options
     @GetMapping("/api/suggestions")
-    public ResponseEntity<PetsList> getSuggestions(@RequestParam(required = false) String search, @RequestParam(required = false) String zip, @RequestParam(required = false) String radius) {
+    public ResponseEntity<PetsList> getSuggestions(@RequestParam(required = false) String search, @RequestParam(required = false) String zip, @RequestParam(required = false, defaultValue="10") String radius) {
 //        System.out.println("got request");
         PetsList petsList = searchService.getSuggestions(search, zip, radius);
         return petsList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(petsList);
