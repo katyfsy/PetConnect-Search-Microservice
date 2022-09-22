@@ -6,7 +6,7 @@ services:
     #    volumes:
     #      - .:/app
     ports:
-      -  "8080:8080"
+     -  "8080:8080"
 #    depends_on:
 #        db:
 #          condition: service_healthy
@@ -45,7 +45,7 @@ services:
     environment:
       - bootstrap.memory_lock=true
       - cluster.name=springelasticgenie
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
       - "discovery.type=single-node"
     ulimits:
       memlock:
