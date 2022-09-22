@@ -17,7 +17,7 @@ public class Source {
     private String name;
 
     private boolean reported;
-    private double weight;
+    private String size;
     private String cover_photo;
     private int favorite_count;
     private String owner;
@@ -33,7 +33,7 @@ public class Source {
     }
 
 
-    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, Long pet_id, String breed, String name, boolean reported, double weight, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description, String city, String state, String species, Date date_posted) {
+    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, Long pet_id, String breed, String name, boolean reported, String size, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description, String city, String state, String species, Date date_posted) {
         this.adopted = adopted;
         this.zip = zip;
         this.sex = sex;
@@ -45,7 +45,7 @@ public class Source {
         this.breed = breed;
         this.name = name;
         this.reported = reported;
-        this.weight = weight;
+        this.size = size;
         this.cover_photo = cover_photo;
         this.favorite_count = favorite_count;
         this.owner = owner;
@@ -148,12 +148,12 @@ public class Source {
         this.reported = reported;
     }
 
-    public double getWeight() {
-        return weight;
+    public void setSize(String size) {
+        this.size = size;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public String getSize() {
+        return size;
     }
 
     public String getCover_photo() {
@@ -242,7 +242,7 @@ public class Source {
                 ", breed='" + breed + '\'' +
                 ", name='" + name + '\'' +
                 ", reported=" + reported +
-                ", weight=" + weight +
+                ", size='" + size + '\'' +
                 ", cover_photo='" + cover_photo + '\'' +
                 ", favorite_count=" + favorite_count +
                 ", owner='" + owner + '\'' +
