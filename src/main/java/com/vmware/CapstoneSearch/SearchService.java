@@ -51,16 +51,16 @@ public class SearchService {
             }
             HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
 
-            ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
+            ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty&size=1000", HttpMethod.POST, httpEntity, SearchResults.class);
             List<Hit> hits = response.getBody().getHits().getHits();
 //            System.out.println(hits);
             List<Pet> convertedHitstoPets = new ArrayList<>();
             for (int i = 0; i < hits.size(); i++) {
                 Source pet = hits.get(i).get_source();
                 if (zip != null && zips.contains(pet.getZip())) {
-                    convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
+                    convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getSize(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
                 } else if (zip == null) {
-                    convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
+                    convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getSize(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
                 }
             }
             List<Pet> filteredPets = convertedHitstoPets;
@@ -115,13 +115,13 @@ public class SearchService {
         String query = "{\"query\":{\"match_all\":{}}}";
         HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
 
-        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
+        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty&size=1000", HttpMethod.POST, httpEntity, SearchResults.class);
         List<Hit> hits = response.getBody().getHits().getHits();
 
         List<Pet> convertedHitstoPets = new ArrayList<>();
         for (int i = 0; i < hits.size(); i++) {
             Source pet = hits.get(i).get_source();
-            convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
+            convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getSize(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
             }
         List<Pet> filteredPets = convertedHitstoPets;
         if (type.equals("cat") || type.equals("dog")) {
@@ -163,7 +163,7 @@ public class SearchService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<?> httpEntity = new HttpEntity<String>("{\"sort\":[{\"@timestamp\":{\"order\":\"asc\",\"format\":\"strict_date_optional_time_nanos\"}},\"_score\"],\"size\":10,\"query\":{\"function_score\":{\"query\":{\"bool\":{\"filter\":{\"term\":{\"adopted\":false}},\"must\":{\"multi_match\":{\"query\":\"" + search + "*\",\"fields\":[\"breed\",\"name\",\"type\",\"description\"],\"fuzziness\":\"2\"}}}},\"script_score\":{\"script\":{\"source\":\"_score\"}}}}}", headers);
-        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
+        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty&size=1000", HttpMethod.POST, httpEntity, SearchResults.class);
 
         List<Hit> hits = response.getBody().getHits().getHits();
 
@@ -174,9 +174,9 @@ public class SearchService {
             Source pet = hits.get(i).get_source();
 
             if (zip != null && zips.contains(pet.getZip())) {
-                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
+                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getSize(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
             } else if (zip == null) {
-                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
+                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getSize(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
             }
 
 //                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
@@ -216,16 +216,16 @@ public class SearchService {
         }
         HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
 
-        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty", HttpMethod.POST, httpEntity, SearchResults.class);
+        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty&size=1000", HttpMethod.POST, httpEntity, SearchResults.class);
         List<Hit> hits = response.getBody().getHits().getHits();
 //            System.out.println(hits);
         List<Pet> convertedHitstoPets = new ArrayList<>();
         for (int i = 0; i < hits.size(); i++) {
             Source pet = hits.get(i).get_source();
             if (zip != null && zips.contains(pet.getZip())) {
-                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
+                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getSize(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
             } else if (zip == null) {
-                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getWeight(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
+                convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getSize(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
             }
         }
         System.out.println(convertedHitstoPets);

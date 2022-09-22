@@ -24,7 +24,7 @@ public class Pet {
     private String type;
     private String breed;
     private String species;
-    private double weight;
+    private String size;
     private String age;
 
     private String sex;
@@ -56,7 +56,7 @@ public class Pet {
         this.sex = sex;
     }
 
-    public Pet(Long petId, String owner, String name, String city, String state, String zip, String type, String breed, String species, double weight, String age, String sex, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score, Date datePosted) {
+    public Pet(Long petId, String owner, String name, String city, String state, String zip, String type, String breed, String species, String size, String age, String sex, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score, Date datePosted) {
         this.petId = petId;
         this.owner = owner;
         this.name = name;
@@ -66,7 +66,7 @@ public class Pet {
         this.type = type;
         this.breed = breed;
         this.species = species;
-        this.weight = weight;
+        this.size = size;
         this.age = age;
         this.sex = sex;
         this.reproductiveStatus = reproductiveStatus;
@@ -152,12 +152,12 @@ public class Pet {
         this.owner = owner;
     }
 
-    public double getWeight() {
-        return weight;
+    public String getSize() {
+        return size;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public boolean isReproductiveStatus() {
@@ -260,7 +260,7 @@ public class Pet {
                 ", type='" + type + '\'' +
                 ", breed='" + breed + '\'' +
                 ", species='" + species + '\'' +
-                ", weight=" + weight +
+                ", size='" + size + '\'' +
                 ", age='" + age + '\'' +
                 ", sex='" + sex + '\'' +
                 ", reproductiveStatus=" + reproductiveStatus +
