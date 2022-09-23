@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class SearchService {
+
+    private static String apitoken = "DemoOnly001AL7CpGoo22dU6WBHeObg44ZhkkBk9bZmqrpE1v6GiH1AwictkdRpQ";
     PetsRepository petsRepository;
 
     public SearchService(PetsRepository petsRepository) {
@@ -30,7 +32,7 @@ public class SearchService {
 
 //            String uri = "https://www.zipcodeapi.com/rest/DemoOnly00YY1F0X8lhFDeitNw4cjgF5hQWCLen5Yw0p4F2mmkLO7I52V8Da6jd3/radius.json/" + zip + "/" + radius + "/mile";
 
-            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/"+ radius + "/mile";
+            String uri = "https://www.zipcodeapi.com/rest/" + apitoken + "/radius.json/" + zip + "/"+ radius + "/mile";
 
             RestTemplate restTemplate = new RestTemplate();
             ZipList response = restTemplate.getForObject(uri, ZipList.class);
@@ -150,7 +152,7 @@ public class SearchService {
 
 //            String uri = "https://www.zipcodeapi.com/rest/DemoOnly00YY1F0X8lhFDeitNw4cjgF5hQWCLen5Yw0p4F2mmkLO7I52V8Da6jd3/radius.json/" + zip + "/" + radius + "/mile";
 
-            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/"+ radius + "/mile";
+            String uri = "https://www.zipcodeapi.com/rest/" + apitoken + "/radius.json/" + zip + "/"+ radius + "/mile";
 
             RestTemplate restTemplate = new RestTemplate();
             ZipList response = restTemplate.getForObject(uri, ZipList.class);
@@ -190,7 +192,7 @@ public class SearchService {
 
 //            String uri = "https://www.zipcodeapi.com/rest/DemoOnly00YY1F0X8lhFDeitNw4cjgF5hQWCLen5Yw0p4F2mmkLO7I52V8Da6jd3/radius.json/" + zip + "/" + radius + "/mile";
 
-            String uri = "https://www.zipcodeapi.com/rest/BGqwQp2uy3Ro7ll4fguvUQByCLqVjzr7uyMRy9QEm3NsKh79piR2iEeODxwnKO5d/radius.json/" + zip + "/"+ radius + "/mile";
+            String uri = "https://www.zipcodeapi.com/rest/" + apitoken + "/radius.json/" + zip + "/"+ radius + "/mile";
 
             RestTemplate restTemplate = new RestTemplate();
             ZipList response = restTemplate.getForObject(uri, ZipList.class);
