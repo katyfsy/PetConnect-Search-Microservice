@@ -169,6 +169,19 @@ public class SearchControllerTests {
                 .andExpect(jsonPath("$.pets", hasSize(5)));
     }
 
+//    @Test
+//    void filterPets_zipOnly_exists_returnsPetsLists() throws Exception {
+//        List<Pet> pets = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
+//        }
+//        when(searchService.filterPets("90210", "10",null, null, null, null, null, "false")).thenReturn(new PetsList(pets));
+//        mockMvc.perform(MockMvcRequestBuilders.get("/api/advSearch?search=*&zip=90210"))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.pets", hasSize(5)));
+//    }
+
   // searching one char at a time - generates autocomplete options
 //  @Test
 //  void getSuggestions_oneChar_exists_returnsPetsListThatApproximateSearchQuery() throws Exception {

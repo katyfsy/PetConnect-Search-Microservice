@@ -94,6 +94,15 @@ class SearchServiceTest {
     }
 
 //    @Test
+//    void filterPets_zipOnly_returnsList() throws JsonProcessingException {
+////        Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
+////        when(petsRepository.findAll()).thenReturn(List.of(pet));
+//        PetsList petsList = searchService.filterPets("90002", "10","other", null, null, null, null, "true");
+//        assertThat(petsList).isNotNull();
+//        assertThat(petsList.isEmpty()).isFalse();
+//    }
+
+//    @Test
 //    void getPets_ZipArgAndTypeArg_returnsList() throws JsonProcessingException {
 //        Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
 //        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));

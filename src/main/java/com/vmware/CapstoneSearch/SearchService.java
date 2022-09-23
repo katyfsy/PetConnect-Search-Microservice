@@ -187,6 +187,11 @@ public class SearchService {
     }
 
     public PetsList filterPets(String zip, String radius, String type, String breed, String age, String sex, String search, String adopted) {
+        if (type == "*") type = "";
+        if (breed == null) breed = "";
+        if (age == null) age = "";
+        if (sex == null) sex = "";
+
         List<String> zips = new ArrayList<>();
         if (zip != null) {
 
@@ -207,14 +212,21 @@ public class SearchService {
         //main search: only zip
         //adv search: type = other
         //should return: list of all other pets
+        System.out.println("BREED " + breed + " | AGE " + age);
+
         if (search == null && type.equals("other")) {
             query = "{\"query\":{\"bool\":{\"must_not\":[{\"terms\":{\"type\":[\"cat\",\"dog\"]}}]}}}";
+            System.out.println("#######CONDITION ONE#######");
             //main search: any string
             //adv search: type = other
         } else if (type.equals("other") && search != null) {
             query = "{\"query\":{\"bool\":{\"must\":[{\"multi_match\":{\"query\":\"" + search + "\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"fuzziness\":\"2\"}}],\"must_not\":[{\"terms\":{\"type\":[\"cat\",\"dog\"]}}]}}}";
+            System.out.println("#######CONDITION TWO#######");
+        } else if (type.equals("cat") || type.equals("dog")){
+            query = "{\"query\":{\"bool\":{\"must\":{\"multi_match\":{\"query\":\"" + search + "\",\"fields\":[\"breed\",\"age\",\"sex\",\"name\",\"type\"],\"fuzziness\":2}},\"filter\":[{\"term\":{\"type\":\"" + type + "\"}},{\"term\":{\"sex\":\"" + sex + "\"}},{\"term\":{\"breed\":\"" + breed + "\"}},{\"term\":{\"age\":\"" + age + "\"}}]}}}";
+            System.out.println("#######CONDITION THREE#######");
         } else {
-            query = "{\"query\":{\"multi_match\":{\"query\":\"" + search + "*\",\"fields\":[\"breed\",\"age\",\"gender\",\"name\",\"type\"],\"fuzziness\":\"2\"}}}";
+            query = "{\"query\":{\"bool\":{\"must\":{\"multi_match\":{\"query\":\"" + search + "\",\"fields\":[\"breed\",\"age\",\"sex\",\"name\",\"type\"],\"fuzziness\":2}},\"filter\":[{\"bool\":{\"should\":[{\"term\":{\"type\":\"" + type +" \"}},{\"term\":{\"sex\":\""+ sex + "\"}},{\"term\":{\"breed\":\"" + breed + "\"}},{\"term\":{\"age\":\"" + age + "\"}}]}}]}}}";
         }
         HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
 
@@ -232,18 +244,18 @@ public class SearchService {
         }
         System.out.println(convertedHitstoPets);
         List<Pet> filteredPets = convertedHitstoPets;
-        if (type.equals("cat") || type.equals("dog")) {
-            filteredPets = filteredPets.stream().filter(pet -> pet.getType().equals(type)).collect(Collectors.toList());
-        }
-        if (breed != null) {
-            filteredPets = filteredPets.stream().filter(pet -> pet.getBreed().equals(breed)).collect(Collectors.toList());
-        }
-        if (age != null) {
-            filteredPets = filteredPets.stream().filter(pet -> pet.getAge().equals(age)).collect(Collectors.toList());
-        }
-        if (sex != null) {
-            filteredPets = filteredPets.stream().filter(pet -> pet.getSex().equals(sex)).collect(Collectors.toList());
-        }
+//        if (type.equals("cat") || type.equals("dog")) {
+//            filteredPets = filteredPets.stream().filter(pet -> pet.getType().equals(type)).collect(Collectors.toList());
+//        }
+//        if (breed != null) {
+//            filteredPets = filteredPets.stream().filter(pet -> pet.getBreed().equals(breed)).collect(Collectors.toList());
+//        }
+//        if (age != null) {
+//            filteredPets = filteredPets.stream().filter(pet -> pet.getAge().equals(age)).collect(Collectors.toList());
+//        }
+//        if (sex != null) {
+//            filteredPets = filteredPets.stream().filter(pet -> pet.getSex().equals(sex)).collect(Collectors.toList());
+//        }
 
         boolean adoptedStatus = false;
         if(adopted != null){
