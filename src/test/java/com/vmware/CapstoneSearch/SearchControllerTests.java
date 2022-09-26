@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -168,6 +169,29 @@ public class SearchControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pets", hasSize(5)));
     }
+
+    @Test
+    void getBreeds_TypeParam_exists_returnsListOfBreeds() throws Exception {
+        List<String> breeds = Arrays.asList(new String[]{"husky","spaniel", "bulldog"});
+        when(searchService.getBreeds("dog")).thenReturn(breeds);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/breeds?type=dog"))
+                .andDo(print())
+                .andExpect(status().isOk());
+//                .andExpect(jsonPath("$.breeds", hasSize(3)));
+    }
+
+//    @Test
+//    void filterPets_zipOnly_exists_returnsPetsLists() throws Exception {
+//        List<Pet> pets = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            pets.add(new Pet("lucky", "1234"+i, "dog", "husky", "young", "female"));
+//        }
+//        when(searchService.filterPets("90210", "10",null, null, null, null, null, "false")).thenReturn(new PetsList(pets));
+//        mockMvc.perform(MockMvcRequestBuilders.get("/api/advSearch?search=*&zip=90210"))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.pets", hasSize(5)));
+//    }
 
   // searching one char at a time - generates autocomplete options
 //  @Test
