@@ -121,7 +121,7 @@ public class SearchService {
 //        String query = "{\"query\":{\"match\":{\"type\":{\"query\":\"" + type + "\"}}}}";
         HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"match\":{\"type\":{\"query\":\"" + type + "\"}}}}", headers);
 
-        ResponseEntity<SearchResults> response = restTemplate.exchange("http://localhost:9200/pets/_search?pretty&size=1000", HttpMethod.POST, httpEntity, SearchResults.class);
+        ResponseEntity<SearchResults> response = restTemplate.exchange(esInstance, HttpMethod.POST, httpEntity, SearchResults.class);
         List<Hit> hits = response.getBody().getHits().getHits();
 //        System.out.println("hits *********" + hits);
         List<Pet> convertedHitstoPets = new ArrayList<>();
@@ -145,7 +145,7 @@ public class SearchService {
         for (int i = 0; i < convertedHitstoPets.size(); i++) {
             uniqueBreeds.add(convertedHitstoPets.get(i).getBreed());
         }
-//        System.out.println("*******filteredbreeds*******" + uniqueBreeds);
+        System.out.println("*******filteredbreeds*******" + uniqueBreeds);
         return List.copyOf(uniqueBreeds);
     };
 
