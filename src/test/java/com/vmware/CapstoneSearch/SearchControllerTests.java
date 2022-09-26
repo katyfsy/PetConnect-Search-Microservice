@@ -177,7 +177,6 @@ public class SearchControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/breeds?type=dog"))
                 .andDo(print())
                 .andExpect(status().isOk());
-//                .andExpect(jsonPath("$.breeds", hasSize(3)));
     }
 
 //    @Test

@@ -16,8 +16,9 @@ public class SearchService {
 
     private static String apitoken = "DemoOnly00ys8Rhn3m8HFu5iKNDb7Y7LNj8iDOCTGUwZIx6254s7QVXn42YHzdNR";
 
-    // use to point to deployed be: "http://elasticsearch:9200/pets/_search?pretty&size=1000"
-    private static String esInstance = "http://localhost:9200/pets/_search?pretty&size=1000";
+    // to point to deployed ES: "http://elasticsearch:9200/pets/_search?pretty&size=1000"
+    // to point to local ES: http://localhost:9200/pets/_search?pretty&size=1000
+    private static String esInstance = "http://elasticsearch:9200/pets/_search?pretty&size=1000";
     PetsRepository petsRepository;
 
     public SearchService(PetsRepository petsRepository) {

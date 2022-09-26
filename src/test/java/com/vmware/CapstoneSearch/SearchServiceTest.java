@@ -93,14 +93,14 @@ class SearchServiceTest {
         assertThat(petsList.isEmpty()).isFalse();
     }
 
-    @Test
-    void getBreeds_TypeArg_returnsList() throws JsonProcessingException {
+//    @Test
+//    void getBreeds_TypeArg_returnsList() throws JsonProcessingException {
 //        Pet pet = new Pet("Lucky", "92114", "dog", "husky", "young", "female");
 //        when(petsRepository.findAll(any(Example.class))).thenReturn(Arrays.asList(pet));
-        List breeds = searchService.getBreeds("cat");
-        assertThat(breeds).isNotNull();
-        assertThat(breeds.isEmpty()).isFalse();
-    }
+//        List breeds = searchService.getBreeds("cat");
+//        assertThat(breeds).isNotNull();
+//        assertThat(breeds.isEmpty()).isFalse();
+//    }
 
 //    @Test
 //    void filterPets_zipOnly_returnsList() throws JsonProcessingException {
