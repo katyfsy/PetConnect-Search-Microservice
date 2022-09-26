@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 public class SearchService {
 
     private static String apitoken = "DemoOnly00ys8Rhn3m8HFu5iKNDb7Y7LNj8iDOCTGUwZIx6254s7QVXn42YHzdNR";
+
+    // use to point to deployed be: "http://elasticsearch:9200/pets/_search?pretty&size=1000"
+    private static String esInstance = "http://localhost:9200/pets/_search?pretty&size=1000";
     PetsRepository petsRepository;
 
     public SearchService(PetsRepository petsRepository) {
@@ -53,7 +56,7 @@ public class SearchService {
             }
             HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
 
-            ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty&size=1000", HttpMethod.POST, httpEntity, SearchResults.class);
+            ResponseEntity<SearchResults> response = restTemplate.exchange(esInstance, HttpMethod.POST, httpEntity, SearchResults.class);
             List<Hit> hits = response.getBody().getHits().getHits();
 //            System.out.println(hits);
             List<Pet> convertedHitstoPets = new ArrayList<>();
@@ -166,7 +169,7 @@ public class SearchService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<?> httpEntity = new HttpEntity<String>("{\"sort\":[{\"@timestamp\":{\"order\":\"asc\",\"format\":\"strict_date_optional_time_nanos\"}},\"_score\"],\"size\":10,\"query\":{\"function_score\":{\"query\":{\"bool\":{\"filter\":{\"term\":{\"adopted\":false}},\"must\":{\"multi_match\":{\"query\":\"" + search + "*\",\"fields\":[\"breed\",\"name\",\"type\",\"description\"],\"fuzziness\":\"2\"}}}},\"script_score\":{\"script\":{\"source\":\"_score\"}}}}}", headers);
-        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty&size=1000", HttpMethod.POST, httpEntity, SearchResults.class);
+        ResponseEntity<SearchResults> response = restTemplate.exchange(esInstance, HttpMethod.POST, httpEntity, SearchResults.class);
 
         List<Hit> hits = response.getBody().getHits().getHits();
 
@@ -231,7 +234,7 @@ public class SearchService {
         }
         HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
 
-        ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty&size=1000", HttpMethod.POST, httpEntity, SearchResults.class);
+        ResponseEntity<SearchResults> response = restTemplate.exchange(esInstance, HttpMethod.POST, httpEntity, SearchResults.class);
         List<Hit> hits = response.getBody().getHits().getHits();
 //            System.out.println(hits);
         List<Pet> convertedHitstoPets = new ArrayList<>();
