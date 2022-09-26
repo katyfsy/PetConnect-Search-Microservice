@@ -114,36 +114,37 @@ public class SearchService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        String query = "{\"query\":{\"match_all\":{}}}";
-        HttpEntity<?> httpEntity = new HttpEntity<String>(query, headers);
+//        String query = "{\"query\":{\"match_all\":{}}}";
+//        String query = "{\"query\":{\"match\":{\"type\":{\"query\":\"" + type + "\"}}}}";
+        HttpEntity<?> httpEntity = new HttpEntity<String>("{\"query\":{\"match\":{\"type\":{\"query\":\"" + type + "\"}}}}", headers);
 
         ResponseEntity<SearchResults> response = restTemplate.exchange("http://elasticsearch:9200/pets/_search?pretty&size=1000", HttpMethod.POST, httpEntity, SearchResults.class);
         List<Hit> hits = response.getBody().getHits().getHits();
-
+        System.out.println("hits *********" + hits);
         List<Pet> convertedHitstoPets = new ArrayList<>();
         for (int i = 0; i < hits.size(); i++) {
             Source pet = hits.get(i).get_source();
             convertedHitstoPets.add(new Pet(pet.getPet_id(), pet.getOwner(), pet.getName(), pet.getCity(), pet.getState(), pet.getZip(), pet.getType(), pet.getBreed(), pet.getSpecies(), pet.getSize(), pet.getAge(), pet.getSex(), pet.isReproductive_status(), pet.getDescription(), pet.getCover_photo(), pet.getFavorite_count(), pet.isReported(), pet.isAdopted(), new ArrayList<>(), hits.get(i).get_score(), pet.getDate_posted()));
             }
-        List<Pet> filteredPets = convertedHitstoPets;
-        if (type.equals("cat") || type.equals("dog")) {
-            filteredPets = filteredPets.stream().filter(pet -> pet.getType().equals(type)).collect(Collectors.toList());
-        }
-        if (type.equals("other")) {
-            filteredPets = filteredPets.stream().filter(pet -> !pet.getType().equals("cat") && !pet.getType().equals("dog")).collect(Collectors.toList());
-        }
-        List<Breed> filteredBreeds = new ArrayList<>();
-        for (int i = 0; i < filteredPets.size(); i++) {
-            filteredBreeds.add(new Breed(filteredPets.get(i).getBreed()));
-        }
-
+//        List<Pet> filteredPets = convertedHitstoPets;
+//        if (type.equals("cat") || type.equals("dog")) {
+//            filteredPets = filteredPets.stream().filter(pet -> pet.getType().equals(type)).collect(Collectors.toList());
+//        }
+//        if (type.equals("other")) {
+//            filteredPets = filteredPets.stream().filter(pet -> !pet.getType().equals("cat") && !pet.getType().equals("dog")).collect(Collectors.toList());
+//        }
+//        List<Breed> filteredBreeds = new ArrayList<>();
+//        for (int i = 0; i < filteredPets.size(); i++) {
+//            filteredBreeds.add(new Breed(filteredPets.get(i).getBreed()));
+//        }
+//
         Set<String> uniqueBreeds = new HashSet<String>();
-        for (int i = 0; i < filteredPets.size(); i++) {
-            uniqueBreeds.add(filteredPets.get(i).getBreed());
+        for (int i = 0; i < convertedHitstoPets.size(); i++) {
+            uniqueBreeds.add(convertedHitstoPets.get(i).getBreed());
         }
-//        System.out.println("*******filteredbreeds*******" + uniqueBreeds);
+        System.out.println("*******filteredbreeds*******" + uniqueBreeds);
         return List.copyOf(uniqueBreeds);
-    }
+    };
 
     // gets documents using filter (adopted), multi-match, fuzziness and max responses (10) sorted by score
     public PetsList getSuggestions(String search, String zip, String radius) {
