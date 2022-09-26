@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class SearchService {
 
-    private static String apitoken = "DemoOnly001AL7CpGoo22dU6WBHeObg44ZhkkBk9bZmqrpE1v6GiH1AwictkdRpQ";
+    private static String apitoken = "DemoOnly00ys8Rhn3m8HFu5iKNDb7Y7LNj8iDOCTGUwZIx6254s7QVXn42YHzdNR";
     PetsRepository petsRepository;
 
     public SearchService(PetsRepository petsRepository) {

@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -167,6 +168,16 @@ public class SearchControllerTests {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pets", hasSize(5)));
+    }
+
+    @Test
+    void getBreeds_TypeParam_exists_returnsListOfBreeds() throws Exception {
+        List<String> breeds = Arrays.asList(new String[]{"husky","spaniel", "bulldog"});
+        when(searchService.getBreeds("dog")).thenReturn(breeds);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/breeds?type=dog"))
+                .andDo(print())
+                .andExpect(status().isOk());
+//                .andExpect(jsonPath("$.breeds", hasSize(3)));
     }
 
 //    @Test
