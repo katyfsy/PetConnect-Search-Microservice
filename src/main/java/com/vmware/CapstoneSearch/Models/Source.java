@@ -21,7 +21,7 @@ public class Source {
     private String cover_photo;
     private int favorite_count;
     private String owner;
-    private boolean reproductive_status;
+    private String reproductive_status;
     private String description;
     private String city;
     private String state;
@@ -33,7 +33,7 @@ public class Source {
     }
 
 
-    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, Long pet_id, String breed, String name, boolean reported, String size, String cover_photo, int favorite_count, String owner, boolean reproductive_status, String description, String city, String state, String species, Date date_posted) {
+    public Source(boolean adopted, String zip, String sex, String version, String timestamp, String type, String age, Long pet_id, String breed, String name, boolean reported, String size, String cover_photo, int favorite_count, String owner, String reproductive_status, String description, String city, String state, String species, Date date_posted) {
         this.adopted = adopted;
         this.zip = zip;
         this.sex = sex;
@@ -180,11 +180,11 @@ public class Source {
         this.owner = owner;
     }
 
-    public boolean isReproductive_status() {
+    public String getReproductive_status() {
         return reproductive_status;
     }
 
-    public void setReproductive_status(boolean reproductive_status) {
+    public void setReproductive_status(String reproductive_status) {
         this.reproductive_status = reproductive_status;
     }
 
