@@ -6,6 +6,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -37,9 +38,16 @@ public class SearchService {
             String uri = "https://www.zipcodeapi.com/rest/" + apitoken + "/radius.json/" + zip + "/"+ radius + "/mile";
 
             RestTemplate restTemplate = new RestTemplate();
-            ZipList response = restTemplate.getForObject(uri, ZipList.class);
-            for (Zip code : response.getZip_codes()) {
-                zips.add(code.zip_code);
+            ZipList response = new ZipList();
+            try {
+                response = restTemplate.getForObject(uri, ZipList.class);
+                for (Zip code : response.getZip_codes()) {
+                    zips.add(code.zip_code);
+                }
+            }
+            catch (final HttpClientErrorException e) {
+                System.out.println(e.getStatusCode());
+                System.out.println(e.getResponseBodyAsString());
             }
         }
 
@@ -158,9 +166,16 @@ public class SearchService {
             String uri = "https://www.zipcodeapi.com/rest/" + apitoken + "/radius.json/" + zip + "/"+ radius + "/mile";
 
             RestTemplate restTemplate = new RestTemplate();
-            ZipList response = restTemplate.getForObject(uri, ZipList.class);
-            for (Zip code : response.getZip_codes()) {
-                zips.add(code.zip_code);
+            ZipList response = new ZipList();
+            try {
+                response = restTemplate.getForObject(uri, ZipList.class);
+                for (Zip code : response.getZip_codes()) {
+                    zips.add(code.zip_code);
+                }
+            }
+            catch (final HttpClientErrorException e) {
+                System.out.println(e.getStatusCode());
+                System.out.println(e.getResponseBodyAsString());
             }
         }
 
@@ -203,9 +218,16 @@ public class SearchService {
             String uri = "https://www.zipcodeapi.com/rest/" + apitoken + "/radius.json/" + zip + "/"+ radius + "/mile";
 
             RestTemplate restTemplate = new RestTemplate();
-            ZipList response = restTemplate.getForObject(uri, ZipList.class);
-            for (Zip code : response.getZip_codes()) {
-                zips.add(code.zip_code);
+            ZipList response = new ZipList();
+            try {
+                response = restTemplate.getForObject(uri, ZipList.class);
+                for (Zip code : response.getZip_codes()) {
+                    zips.add(code.zip_code);
+                }
+            }
+            catch (final HttpClientErrorException e) {
+                System.out.println(e.getStatusCode());
+                System.out.println(e.getResponseBodyAsString());
             }
         }
         RestTemplate restTemplate = new RestTemplate();
