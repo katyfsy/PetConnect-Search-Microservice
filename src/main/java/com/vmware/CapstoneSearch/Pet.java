@@ -26,10 +26,8 @@ public class Pet {
     private String species;
     private String size;
     private String age;
-
     private String sex;
-
-    private boolean reproductiveStatus;
+    private String reproductiveStatus;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -56,7 +54,7 @@ public class Pet {
         this.sex = sex;
     }
 
-    public Pet(Long petId, String owner, String name, String city, String state, String zip, String type, String breed, String species, String size, String age, String sex, boolean reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score, Date datePosted) {
+    public Pet(Long petId, String owner, String name, String city, String state, String zip, String type, String breed, String species, String size, String age, String sex, String reproductiveStatus, String description, String coverPhoto, int favoriteCount, boolean reported, boolean adopted, List<Photo> photos, float score, Date datePosted) {
         this.petId = petId;
         this.owner = owner;
         this.name = name;
@@ -160,11 +158,11 @@ public class Pet {
         this.size = size;
     }
 
-    public boolean isReproductiveStatus() {
+    public String getReproductiveStatus() {
         return reproductiveStatus;
     }
 
-    public void setReproductiveStatus(boolean reproductiveStatus) {
+    public void setReproductiveStatus(String reproductiveStatus) {
         this.reproductiveStatus = reproductiveStatus;
     }
 
